@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
+    
+    <changeSet id="1" author="Patrick Heidotting">
+        <createTable tableName="REVINFO">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="timestamp" type="bigint" />
+            <column name="userid" type="bigint" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="Patrick Heidotting">
+        <createTable tableName="POLIS">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="SOORT" type="varchar(2)" />
+            <column name="STATUS" type="varchar(3)" />
+            <column name="BETAALFREQUENTIE" type="varchar(1)" />
+            <column name="INGANGSDATUM" type="date" />
+            <column name="EINDDATUM" type="date" />
+            <column name="POLISNUMMER" type="varchar(25)" />
+            <column name="KENMERK" type="varchar(100)" />
+            <column name="PREMIE" type="double" />
+            <column name="WIJZIGINGSDATUM" type="date" />
+            <column name="PROLONGATIEDATUM" type="date" />
+            <column name="BEDRIJF" type="bigint(20)" />
+            <column name="MAATSCHAPPIJ" type="bigint(20)" />
+            <column name="OMSCHRIJVING" type="text" />
+            <column name="RELATIE" type="bigint(20)" />
+            <column name="DEKKING" type="varchar(250)" />
+            <column name="VERZEKERDEZAAK" type="varchar(250)" />
+        </createTable>
+        <createTable tableName="POLIS_AUD">
+            <column name="ID" type="int">
+                <constraints nullable="false" />
+            </column>
+            <column name="REV" type="int" />
+            <column name="REVTYPE" type="int" />
+            <column name="SOORT" type="varchar(2)" />
+            <column name="STATUS" type="varchar(3)" />
+            <column name="BETAALFREQUENTIE" type="varchar(1)" />
+            <column name="INGANGSDATUM" type="date" />
+            <column name="EINDDATUM" type="date" />
+            <column name="POLISNUMMER" type="varchar(25)" />
+            <column name="KENMERK" type="varchar(100)" />
+            <column name="PREMIE" type="double" />
+            <column name="WIJZIGINGSDATUM" type="date" />
+            <column name="PROLONGATIEDATUM" type="date" />
+            <column name="BEDRIJF" type="bigint(20)" />
+            <column name="MAATSCHAPPIJ" type="bigint(20)" />
+            <column name="OMSCHRIJVING" type="text" />
+            <column name="RELATIE" type="bigint(20)" />
+            <column name="DEKKING" type="varchar(250)" />
+            <column name="VERZEKERDEZAAK" type="varchar(250)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="3" author="Patrick Heidotting">
+        <createTable tableName="hibernate_sequence">
+            <column name="next_val" type="bigint(20)"/>
+        </createTable>
+        <insert tableName="hibernate_sequence">
+            <column name="next_val">1</column>
+        </insert>
+    </changeSet>
+</databaseChangeLog>
