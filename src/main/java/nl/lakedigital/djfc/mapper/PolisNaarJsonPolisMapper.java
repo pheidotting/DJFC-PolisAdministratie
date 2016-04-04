@@ -4,7 +4,7 @@ import nl.lakedigital.djfc.commons.json.JsonPolis;
 import nl.lakedigital.djfc.domain.Bedrag;
 import nl.lakedigital.djfc.domain.Polis;
 
-public class PolisNaarJsonPolisMapper extends AbstractMapper<Polis, JsonPolis> {
+public class PolisNaarJsonPolisMapper extends AbstractMapper<Polis, JsonPolis> implements JsonMapper{
     @Override
     public JsonPolis map(Polis polis, Object parent, Object bestaandOjbect) {
         JsonPolis jsonPolis = new JsonPolis();
@@ -55,6 +55,7 @@ public class PolisNaarJsonPolisMapper extends AbstractMapper<Polis, JsonPolis> {
     }
 
     @Override
+    public
     boolean isVoorMij(Object object) {
         return object instanceof Polis;
     }

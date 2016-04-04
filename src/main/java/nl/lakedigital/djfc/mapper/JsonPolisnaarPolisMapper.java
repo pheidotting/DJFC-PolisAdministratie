@@ -25,7 +25,7 @@ import static com.google.common.collect.Iterables.getFirst;
 import static com.google.common.collect.Iterables.getOnlyElement;
 
 @Component
-public class JsonPolisnaarPolisMapper extends AbstractMapper<JsonPolis, Polis> {
+public class JsonPolisnaarPolisMapper extends AbstractMapper<JsonPolis, Polis> implements JsonMapper{
     private static final Logger LOGGER = LoggerFactory.getLogger(JsonPolisnaarPolisMapper.class);
 
     @Inject
