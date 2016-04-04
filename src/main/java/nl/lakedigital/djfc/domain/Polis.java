@@ -1,15 +1,13 @@
 package nl.lakedigital.djfc.domain;
 
-import nl.lakedigital.djfc.domain.Betaalfrequentie;
-import nl.lakedigital.djfc.domain.SoortVerzekering;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.envers.Audited;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -160,7 +158,7 @@ public abstract class Polis implements Serializable, Cloneable {
 
     public void setEindDatum(LocalDate eindDatum) {
         if (eindDatum == null) {
-            eindDatum = null;
+            this.eindDatum = null;
         }
         if (eindDatum != null) {
             this.eindDatum = eindDatum.toDate();
@@ -182,28 +180,6 @@ public abstract class Polis implements Serializable, Cloneable {
     public void setRelatie(Long relatie) {
         this.relatie = relatie;
     }
-
-    //    public Set<Bijlage> getBijlages() {
-    //        if (bijlages == null) {
-    //            bijlages = new HashSet<>();
-    //        }
-    //        return bijlages;
-    //    }
-    //
-    //    public void setBijlages(Set<Bijlage> bijlages) {
-    //        this.bijlages = bijlages;
-    //    }
-    //
-    //    public Set<Opmerking> getOpmerkingen() {
-    //        if (opmerkingen == null) {
-    //            opmerkingen = new HashSet<>();
-    //        }
-    //        return opmerkingen;
-    //    }
-    //
-    //    public void setOpmerkingen(Set<Opmerking> opmerkingen) {
-    //        this.opmerkingen = opmerkingen;
-    //    }
 
     public Long getMaatschappij() {
         return maatschappij;
@@ -275,17 +251,6 @@ public abstract class Polis implements Serializable, Cloneable {
         this.bedrijf = bedrijf;
     }
 
-    //    public Set<Schade> getSchades() {
-    //        if (schades == null) {
-    //            schades = new HashSet<>();
-    //        }
-    //        return schades;
-    //    }
-    //
-    //    public void setSchades(Set<Schade> schades) {
-    //        this.schades = schades;
-    //    }
-
     public String getOmschrijvingVerzekering() {
         return omschrijvingVerzekering;
     }
@@ -306,43 +271,16 @@ public abstract class Polis implements Serializable, Cloneable {
 
         Polis polis = (Polis) o;
 
-        return new EqualsBuilder().append(getId(), polis.getId()).isEquals();
+        return new EqualsBuilder().append(getId(), polis.getId()).append(getStatus(), polis.getStatus()).append(getPolisNummer(), polis.getPolisNummer()).append(getKenmerk(), polis.getKenmerk()).append(getIngangsDatum(), polis.getIngangsDatum()).append(getEindDatum(), polis.getEindDatum()).append(getPremie(), polis.getPremie()).append(getWijzigingsDatum(), polis.getWijzigingsDatum()).append(getProlongatieDatum(), polis.getProlongatieDatum()).append(getBetaalfrequentie(), polis.getBetaalfrequentie()).append(getDekking(), polis.getDekking()).append(getVerzekerdeZaak(), polis.getVerzekerdeZaak()).append(getRelatie(), polis.getRelatie()).append(getBedrijf(), polis.getBedrijf()).append(getMaatschappij(), polis.getMaatschappij()).append(getOmschrijvingVerzekering(), polis.getOmschrijvingVerzekering()).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(getId()).toHashCode();
+        return new HashCodeBuilder(17, 37).append(getId()).append(getStatus()).append(getPolisNummer()).append(getKenmerk()).append(getIngangsDatum()).append(getEindDatum()).append(getPremie()).append(getWijzigingsDatum()).append(getProlongatieDatum()).append(getBetaalfrequentie()).append(getDekking()).append(getVerzekerdeZaak()).append(getRelatie()).append(getBedrijf()).append(getMaatschappij()).append(getOmschrijvingVerzekering()).toHashCode();
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Polis{");
-        sb.append("id=").append(id).append("\n");
-        if (status != null) {
-            sb.append(", status=").append(status.getOmschrijving()).append("\n");
-        }
-        sb.append(", polisNummer='").append(polisNummer).append('\'').append("\n");
-        sb.append(", kenmerk='").append(kenmerk).append('\'').append("\n");
-        sb.append(", ingangsDatum=").append(getIngangsDatum()).append("\n");
-        sb.append(", eindDatum=").append(getEindDatum()).append("\n");
-        sb.append(", premie=").append(premie).append("\n");
-        sb.append(", wijzigingsDatum=").append(getWijzigingsDatum()).append("\n");
-        sb.append(", prolongatieDatum=").append(getProlongatieDatum()).append("\n");
-        sb.append(", betaalfrequentie=").append(betaalfrequentie).append("\n");
-        //        if (relatie != null) {
-        //            sb.append(", relatie=").append(relatie.getIdentificatie()).append("\n");
-        //        }
-        if (bedrijf != null) {
-            sb.append(", bedrijf=").append(bedrijf).append("\n");
-        }
-        //        sb.append(", bijlages=").append(bijlages).append("\n");
-        //        sb.append(", opmerkingen=").append(opmerkingen).append("\n");
-        if (maatschappij != null) {
-            sb.append(", maatschappij=").append(maatschappij).append("\n");
-        }
-        //        sb.append(", schades=").append(schades).append("\n");
-        sb.append(", omschrijvingVerzekering='").append(omschrijvingVerzekering).append('\'').append("\n");
-        sb.append('}');
-        return sb.toString();
+        return new ToStringBuilder(this).append("id", id).append("status", status).append("polisNummer", polisNummer).append("kenmerk", kenmerk).append("ingangsDatum", ingangsDatum).append("eindDatum", eindDatum).append("premie", premie).append("wijzigingsDatum", wijzigingsDatum).append("prolongatieDatum", prolongatieDatum).append("betaalfrequentie", betaalfrequentie).append("dekking", dekking).append("verzekerdeZaak", verzekerdeZaak).append("relatie", relatie).append("bedrijf", bedrijf).append("maatschappij", maatschappij).append("omschrijvingVerzekering", omschrijvingVerzekering).toString();
     }
 }
