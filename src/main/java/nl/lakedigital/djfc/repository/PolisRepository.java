@@ -83,7 +83,21 @@ public class PolisRepository {
         return t;
     }
 
-//    public List<Polis> alles(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public Polis zoekOpPolisNummer(String PolisNummer) {
+        getTransaction().begin();
+
+        Query query = getSession().getNamedQuery("Polis.zoekOpPolisNummer");
+        query.setParameter("polisNummer", PolisNummer);
+
+        Polis polis = (Polis) query.uniqueResult();
+
+        getTransaction().commit();
+
+        return polis;
+    }
+
+
+    //    public List<Polis> alles(SoortEntiteit soortEntiteit, Long entiteitId) {
 //        getTransaction().begin();
 //
 //        Query query = getSession().getNamedQuery(getMyType() + ".zoekBijEntiteit");

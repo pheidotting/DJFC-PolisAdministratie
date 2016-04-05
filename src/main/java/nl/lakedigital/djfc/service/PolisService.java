@@ -2,8 +2,8 @@ package nl.lakedigital.djfc.service;
 
 import com.google.common.collect.Lists;
 import nl.lakedigital.djfc.domain.Polis;
+import nl.lakedigital.djfc.domain.SoortEntiteit;
 import nl.lakedigital.djfc.domain.SoortVerzekering;
-import nl.lakedigital.djfc.predicates.PolisOpSchermNaamPredicate;
 import nl.lakedigital.djfc.predicates.PolissenOpSoortPredicate;
 import nl.lakedigital.djfc.repository.PolisRepository;
 import nl.lakedigital.djfc.transformers.PolisToSchermNaamTransformer;
@@ -18,7 +18,6 @@ import javax.persistence.NoResultException;
 import java.util.List;
 
 import static com.google.common.collect.Iterables.filter;
-import static com.google.common.collect.Iterables.getOnlyElement;
 import static com.google.common.collect.Iterables.transform;
 
 @Service
@@ -38,9 +37,9 @@ public class PolisService {
         return Lists.newArrayList(polisString);
     }
 
-//    public List<Polis> allePolissenVanRelatieEnZijnBedrijf(Relatie relatie) {
-//        return polisRepository.allePolissenVanRelatieEnZijnBedrijf(relatie);
-//    }
+    public List<Polis> alles(SoortEntiteit soortEntiteit, Long entiteitId) {
+        return polisRepository.alles(soortEntiteit, entiteitId);
+    }
 
     public void beeindigen(Long id) {
         Polis polis = polisRepository.lees(id);
@@ -61,14 +60,15 @@ public class PolisService {
         return polisRepository.lees(id);
     }
 
-//    public Polis zoekOpPolisNummer(String polisNummer) {
-//        try {
-//            return polisRepository.zoekOpPolisNummer(polisNummer, kantoorRepository.lees(1L));
-//        } catch (NoResultException e) {
-//            LOGGER.debug("Niks gevonden ", e);
-//            return null;
-//        }
-//    }
+
+    public Polis zoekOpPolisNummer(String polisNummer) {
+        try {
+            return polisRepository.zoekOpPolisNummer(polisNummer);
+        } catch (NoResultException e) {
+            LOGGER.debug("Niks gevonden ", e);
+            return null;
+        }
+    }
 
     public void verwijder(Long id) {
         LOGGER.debug("Ophalen Polis");
@@ -81,14 +81,4 @@ public class PolisService {
 
         polisRepository.verwijder(polis);
     }
-
-//    public List<Polis> allePolissenBijRelatie(Long relatie) {
-//        return polisRepository.allePolissenBijRelatie(relatie);
-//    }
-//
-//    public List<Polis> allePolissenBijBedrijf(Long bedrijf) {
-//        return polisRepository.allePolissenBijBedrijf(bedrijf);
-//    }
-
-
 }
