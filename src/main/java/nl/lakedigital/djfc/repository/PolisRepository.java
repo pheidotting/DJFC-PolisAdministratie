@@ -37,10 +37,15 @@ public class PolisRepository {
         return transaction;
     }
 
+    public void verwijder(Polis polis) {
+        List<Polis> polissen = new ArrayList();
+        polissen.add(polis);
+
+        verwijder(polissen);
+    }
+
     public void verwijder(List<Polis> polissen) {
-        if (getTransaction().getStatus() != TransactionStatus.ACTIVE) {
             getTransaction().begin();
-        }
 
         for (Polis polis : polissen) {
             getSession().delete(polis);
@@ -96,20 +101,6 @@ public class PolisRepository {
         return polis;
     }
 
-
-    //    public List<Polis> alles(SoortEntiteit soortEntiteit, Long entiteitId) {
-//        getTransaction().begin();
-//
-//        Query query = getSession().getNamedQuery(getMyType() + ".zoekBijEntiteit");
-//        query.setParameter("soortEntiteit", soortEntiteit);
-//        query.setParameter("entiteitId", entiteitId);
-//
-//        List<Polis> lijst = query.list();
-//
-//        getTransaction().commit();
-//
-//        return lijst;
-//    }
     public List<Polis> alles(SoortEntiteit soortEntiteit, Long entiteitId) {
         getTransaction().begin();
 
@@ -127,13 +118,5 @@ public class PolisRepository {
         getTransaction().commit();
 
         return lijst;
-    }
-
-    public void verwijder(Polis polis){
-        getTransaction().begin();
-
-        getSession().delete(polis);
-
-        getTransaction().commit();
     }
 }
