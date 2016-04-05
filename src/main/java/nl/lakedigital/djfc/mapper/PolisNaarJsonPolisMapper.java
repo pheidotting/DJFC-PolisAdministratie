@@ -7,6 +7,8 @@ import nl.lakedigital.djfc.domain.Polis;
 public class PolisNaarJsonPolisMapper extends AbstractMapper<Polis, JsonPolis> implements JsonMapper{
     @Override
     public JsonPolis map(Polis polis, Object parent, Object bestaandOjbect) {
+        String datePattern = "yyyy-MM-dd";
+
         JsonPolis jsonPolis = new JsonPolis();
 
         jsonPolis.setId(polis.getId());
@@ -21,16 +23,16 @@ public class PolisNaarJsonPolisMapper extends AbstractMapper<Polis, JsonPolis> i
             jsonPolis.setPremie(zetBedragOm(polis.getPremie()));
         }
         if (polis.getIngangsDatum() != null) {
-            jsonPolis.setIngangsDatum(polis.getIngangsDatum().toString("yyyy-MM-dd"));
+            jsonPolis.setIngangsDatum(polis.getIngangsDatum().toString(datePattern));
         }
         if (polis.getEindDatum() != null) {
-            jsonPolis.setEindDatum(polis.getEindDatum().toString("yyyy-MM-dd"));
+            jsonPolis.setEindDatum(polis.getEindDatum().toString(datePattern));
         }
         if (polis.getWijzigingsDatum() != null) {
-            jsonPolis.setWijzigingsDatum(polis.getWijzigingsDatum().toString("yyyy-MM-dd"));
+            jsonPolis.setWijzigingsDatum(polis.getWijzigingsDatum().toString(datePattern));
         }
         if (polis.getProlongatieDatum() != null) {
-            jsonPolis.setProlongatieDatum(polis.getProlongatieDatum().toString("yyyy-MM-dd"));
+            jsonPolis.setProlongatieDatum(polis.getProlongatieDatum().toString(datePattern));
         }
         if (polis.getBetaalfrequentie() != null) {
             jsonPolis.setBetaalfrequentie(polis.getBetaalfrequentie().getOmschrijving());
