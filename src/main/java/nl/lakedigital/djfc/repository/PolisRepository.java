@@ -61,9 +61,7 @@ public class PolisRepository {
         opslaan(polissen);
     }
     public void opslaan(List<Polis> polissen) {
-        if (getTransaction().getStatus() != TransactionStatus.ACTIVE) {
             getTransaction().begin();
-        }
 
         for (Polis t : polissen) {
             LOGGER.info("Opslaan {}", ReflectionToStringBuilder.toString(t, ToStringStyle.SHORT_PREFIX_STYLE));

@@ -5,6 +5,7 @@ import nl.lakedigital.djfc.domain.Betaalfrequentie;
 import nl.lakedigital.djfc.domain.Polis;
 import nl.lakedigital.djfc.domain.SoortEntiteit;
 import nl.lakedigital.djfc.domain.particulier.AutoVerzekering;
+import nl.lakedigital.djfc.domain.zakelijk.GeldVerzekering;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.junit.Test;
@@ -18,10 +19,8 @@ import java.util.List;
 
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.getFirst;
-import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext-unittest.xml")
@@ -108,5 +107,22 @@ assertThat(opgehaald.getBetaalfrequentie(),is(autoVerzekering.getBetaalfrequenti
         polisRepository.verwijder(autoVerzekering);
 
         assertThat(polisRepository.alles(soortEntiteit,entiteitId).size(),is(0));
+    }
+
+    @Test
+    public void testZoekOpPolisNummer() {
+        Polis autoVerzekering = new AutoVerzekering(SoortEntiteit.RELATIE, 1L);
+        autoVerzekering.setPolisNummer("a");
+        Polis geldVerzekering = new GeldVerzekering(SoortEntiteit.BEDRIJF, 2L);
+        geldVerzekering.setPolisNummer("b");
+
+        List<Polis> polissen = new ArrayList<>();
+        polissen.add(autoVerzekering);
+        polissen.add(geldVerzekering);
+
+        polisRepository.opslaan(polissen);
+
+        assertThat(polisRepository.zoekOpPolisNummer("a"), is(autoVerzekering));
+        assertThat(polisRepository.zoekOpPolisNummer("b"), is(geldVerzekering));
     }
 }
