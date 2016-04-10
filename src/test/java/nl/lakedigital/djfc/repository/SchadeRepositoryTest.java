@@ -92,23 +92,24 @@ public class SchadeRepositoryTest {
         repository.verwijderStatusSchade(newArrayList(statusSchade1, statusSchade2, statusSchade3));
     }
 
-    //    @Test
-    //    public void zoekOpSchadeNummerMaatschappij() {
-    //        StatusSchade statusSchade = maakStatusSchade("status");
-    //
-    //        repository.getTransaction().begin();
-    //        repository.getSession().persist(statusSchade);
-    //        repository.getTransaction().commit();
-    //
-    //        Schade schade1 = maakSchade("schadeNummerMaatschappij1", statusSchade);
-    //        Schade schade2 = maakSchade("schadeNummerMaatschappij2", statusSchade);
-    //
-    //        repository.opslaan(schade1);
-    //        repository.opslaan(schade2);
-    //
-    //        assertEquals(schade1, repository.zoekOpSchadeNummerMaatschappij("schadeNummerMaatschappij1"));
-    //        assertEquals(schade2, repository.zoekOpSchadeNummerMaatschappij("schadeNummerMaatschappij2"));
-    //    }
+    @Test
+    public void zoekOpSchadeNummerMaatschappij() {
+        StatusSchade statusSchade = maakStatusSchade("status");
+
+        repository.getTransaction().begin();
+        repository.getSession().persist(statusSchade);
+        repository.getTransaction().commit();
+
+        Schade schade1 = maakSchade("schadeNummerMaatschappij1", statusSchade, 1L);
+        Schade schade2 = maakSchade("schadeNummerMaatschappij2", statusSchade, 1L);
+
+        repository.opslaan(newArrayList(schade1, schade2));
+
+        assertEquals(schade1.getId(), repository.zoekOpSchadeNummerMaatschappij("schadeNummerMaatschappij1").getId());
+        assertEquals(schade2.getId(), repository.zoekOpSchadeNummerMaatschappij("schadeNummerMaatschappij2").getId());
+
+        repository.verwijder(newArrayList(schade1, schade2));
+    }
 
     //    @Test
     //    public void alleSchadesBijRelatie() {

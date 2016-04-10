@@ -116,12 +116,18 @@ public class SchadeRepository {
         return result;
     }
 
-    //    public Schade zoekOpSchadeNummerMaatschappij(String schadeNummerMaatschappij) {
-    //        TypedQuery<Schade> query = getEm().createNamedQuery("Schade.zoekOpschadeNummerMaatschappij", Schade.class);
-    //        query.setParameter("schadeNummerMaatschappij", schadeNummerMaatschappij);
-    //
-    //        return query.getSingleResult();
-    //    }
+    public Schade zoekOpSchadeNummerMaatschappij(String schadeNummerMaatschappij) {
+        getTransaction().begin();
+
+        Query query = getSession().getNamedQuery("Schade.zoekOpschadeNummerMaatschappij");
+        query.setParameter("schadeNummerMaatschappij", schadeNummerMaatschappij);
+
+        Schade result = (Schade) query.uniqueResult();
+
+        getTransaction().commit();
+
+        return result;
+    }
     //
     //    public List<Schade> alleSchadesBijRelatie(Long relatie) {
     //        getTransaction().begin();

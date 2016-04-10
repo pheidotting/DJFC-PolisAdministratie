@@ -15,10 +15,7 @@ import java.util.Date;
 @Audited
 @Entity
 @Table(name = "SCHADE")
-@NamedQueries({
-        // @NamedQuery(name = "Schade.zoekOpschadeNummerMaatschappij", query = "select s from Schade s where s.schadeNummerMaatschappij = :schadeNummerMaatschappij"),
-        //                @NamedQuery(name = "Schade.allesVanRelatie", query = "select s from Schade s where s.polis.relatie = :relatie"),//
-        //                @NamedQuery(name = "Schade.allesVanBedrijf", query = "select s from Schade s where s.polis.bedrijf = :bedrijf")
+@NamedQueries({@NamedQuery(name = "Schade.zoekOpschadeNummerMaatschappij", query = "select s from Schade s where s.schadeNummerMaatschappij = :schadeNummerMaatschappij"),//
         @NamedQuery(name = "Schade.allesBijPolis", query = "select s from Schade s where s.polis = :polis")})
 public class Schade implements Comparable, Serializable {
     private static final long serialVersionUID = -8340805705038811388L;
@@ -179,7 +176,7 @@ public class Schade implements Comparable, Serializable {
      */
     @Override
     public String toString() {
-        return new ToStringBuilder(this).append("soortSchade", this.soortSchade).append("datumTijdMelding", this.datumTijdMelding).append("locatie", this.locatie).append("schadeNummerMaatschappij", this.schadeNummerMaatschappij).append("datumTijdSchade", this.datumTijdSchade).append("statusSchade", this.statusSchade).append("id", this.id).append("soortSchadeOngedefinieerd", this.soortSchadeOngedefinieerd).append("schadeNummerTussenPersoon", this.schadeNummerTussenPersoon).append("eigenRisico", this.eigenRisico).append("omschrijving", this.omschrijving).append("datumAfgehandeld", this.datumAfgehandeld).toString();
+        return new ToStringBuilder(this).append("soortSchade", this.soortSchade).append("locatie", this.locatie).append("schadeNummerMaatschappij", this.schadeNummerMaatschappij).append("statusSchade", this.statusSchade).append("id", this.id).append("soortSchadeOngedefinieerd", this.soortSchadeOngedefinieerd).append("schadeNummerTussenPersoon", this.schadeNummerTussenPersoon).append("eigenRisico", this.eigenRisico).append("omschrijving", this.omschrijving).append("datumAfgehandeld", this.datumAfgehandeld).toString();
     }
 
     /**
@@ -188,7 +185,7 @@ public class Schade implements Comparable, Serializable {
     @Override
     public int compareTo(Object object) {
         Schade myClass = (Schade) object;
-        return new CompareToBuilder().append(this.datumTijdMelding, myClass.datumTijdMelding).append(this.locatie, myClass.locatie).append(this.schadeNummerMaatschappij, myClass.schadeNummerMaatschappij).append(this.datumTijdSchade, myClass.datumTijdSchade).append(this.statusSchade, myClass.statusSchade).append(this.id, myClass.id).append(this.soortSchadeOngedefinieerd, myClass.soortSchadeOngedefinieerd).append(this.schadeNummerTussenPersoon, myClass.schadeNummerTussenPersoon).append(this.eigenRisico, myClass.eigenRisico).append(this.omschrijving, myClass.omschrijving).append(this.datumAfgehandeld, myClass.datumAfgehandeld).toComparison();
+        return new CompareToBuilder().append(this.datumTijdMelding, myClass.datumTijdMelding).append(this.locatie, myClass.locatie).append(this.schadeNummerMaatschappij, myClass.schadeNummerMaatschappij).append(this.statusSchade, myClass.statusSchade).append(this.id, myClass.id).append(this.soortSchadeOngedefinieerd, myClass.soortSchadeOngedefinieerd).append(this.schadeNummerTussenPersoon, myClass.schadeNummerTussenPersoon).append(this.eigenRisico, myClass.eigenRisico).append(this.omschrijving, myClass.omschrijving).append(this.datumAfgehandeld, myClass.datumAfgehandeld).toComparison();
     }
 
     /**
@@ -196,7 +193,7 @@ public class Schade implements Comparable, Serializable {
      */
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(761314323, 831310645).appendSuper(super.hashCode()).append(this.datumTijdMelding).append(this.locatie).append(this.schadeNummerMaatschappij).append(this.datumTijdSchade).append(this.statusSchade).append(this.id).append(this.soortSchadeOngedefinieerd).append(this.schadeNummerTussenPersoon).append(this.eigenRisico).append(this.omschrijving).append(this.datumAfgehandeld).toHashCode();
+        return new HashCodeBuilder(761314323, 831310645).appendSuper(super.hashCode()).append(this.locatie).append(this.schadeNummerMaatschappij).append(this.statusSchade).append(this.id).append(this.soortSchadeOngedefinieerd).append(this.schadeNummerTussenPersoon).append(this.eigenRisico).append(this.omschrijving).append(this.datumAfgehandeld).toHashCode();
     }
 
     /**
@@ -208,6 +205,6 @@ public class Schade implements Comparable, Serializable {
             return false;
         }
         Schade rhs = (Schade) object;
-        return new EqualsBuilder().appendSuper(super.equals(object)).append(this.soortSchade, rhs.soortSchade).append(this.datumTijdMelding, rhs.datumTijdMelding).append(this.locatie, rhs.locatie).append(this.polis, rhs.polis).append(this.schadeNummerMaatschappij, rhs.schadeNummerMaatschappij).append(this.datumTijdSchade, rhs.datumTijdSchade).append(this.statusSchade, rhs.statusSchade).append(this.id, rhs.id).append(this.soortSchadeOngedefinieerd, rhs.soortSchadeOngedefinieerd).append(this.schadeNummerTussenPersoon, rhs.schadeNummerTussenPersoon).append(this.eigenRisico, rhs.eigenRisico).append(this.omschrijving, rhs.omschrijving).append(this.datumAfgehandeld, rhs.datumAfgehandeld).isEquals();
+        return new EqualsBuilder().appendSuper(super.equals(object)).append(this.soortSchade, rhs.soortSchade).append(this.locatie, rhs.locatie).append(this.polis, rhs.polis).append(this.schadeNummerMaatschappij, rhs.schadeNummerMaatschappij).append(this.statusSchade, rhs.statusSchade).append(this.id, rhs.id).append(this.soortSchadeOngedefinieerd, rhs.soortSchadeOngedefinieerd).append(this.schadeNummerTussenPersoon, rhs.schadeNummerTussenPersoon).append(this.eigenRisico, rhs.eigenRisico).append(this.omschrijving, rhs.omschrijving).append(this.datumAfgehandeld, rhs.datumAfgehandeld).isEquals();
     }
 }
