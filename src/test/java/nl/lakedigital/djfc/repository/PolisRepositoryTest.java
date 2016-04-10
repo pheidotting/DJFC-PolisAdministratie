@@ -124,5 +124,7 @@ assertThat(opgehaald.getBetaalfrequentie(),is(autoVerzekering.getBetaalfrequenti
 
         assertThat(polisRepository.zoekOpPolisNummer("a"), is(autoVerzekering));
         assertThat(polisRepository.zoekOpPolisNummer("b"), is(geldVerzekering));
+
+        polisRepository.verwijder(polissen);
     }
 }
