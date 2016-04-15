@@ -34,7 +34,7 @@
 		<level value="info"/>
 	</logger>
 	<logger name="org.springframework">
-		<level value="error"/>
+		<level value="info"/>
 	</logger>
 	<logger name="org.apache">
 		<level value="error"/>

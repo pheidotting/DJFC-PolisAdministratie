@@ -3,8 +3,11 @@ package nl.lakedigital.djfc.mapper;
 import nl.lakedigital.djfc.commons.json.JsonPolis;
 import nl.lakedigital.djfc.domain.Bedrag;
 import nl.lakedigital.djfc.domain.Polis;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PolisNaarJsonPolisMapper extends AbstractMapper<Polis, JsonPolis> implements JsonMapper{
+
     @Override
     public JsonPolis map(Polis polis, Object parent, Object bestaandOjbect) {
         String datePattern = "yyyy-MM-dd";
@@ -45,7 +48,6 @@ public class PolisNaarJsonPolisMapper extends AbstractMapper<Polis, JsonPolis> i
         jsonPolis.setSoort(polis.getClass().getSimpleName().replace("Verzekering", ""));
         if (polis.getBedrijf() != null) {
             jsonPolis.setBedrijf(polis.getBedrijf().toString());
-            jsonPolis.setBedrijfsId(polis.getBedrijf());
         }
         //        jsonPolis.setSchades(schadeMapper.mapAllNaarJson(polis.getSchades()));
         if (polis.getRelatie() != null) {
@@ -57,8 +59,7 @@ public class PolisNaarJsonPolisMapper extends AbstractMapper<Polis, JsonPolis> i
     }
 
     @Override
-    public
-    boolean isVoorMij(Object object) {
+    public boolean isVoorMij(final Object object) {
         return object instanceof Polis;
     }
     public static String zetBedragOm(Bedrag bedrag) {

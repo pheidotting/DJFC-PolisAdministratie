@@ -11,13 +11,9 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
-import javax.ws.rs.QueryParam;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,9 +41,9 @@ public class PolisController {
         return polisService.allePolisSoorten(SoortVerzekering.ZAKELIJK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/lees")
+    @RequestMapping(method = RequestMethod.GET, value = "/lees/{id}")
     @ResponseBody
-    public JsonPolis lees(@QueryParam("id") String id) {
+    public JsonPolis lees(@PathVariable("id") String id) {
         LOGGER.debug("ophalen Polis met id " + id);
         if (id != null && !"".equals(id) && !"0".equals(id)) {
             LOGGER.debug("ophalen Polis");
@@ -58,16 +54,16 @@ public class PolisController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/beeindigen")
+    @RequestMapping(method = RequestMethod.GET, value = "/beeindigen/{id}")
     @ResponseBody
-    public void beeindigen(@QueryParam("id") Long id) {
+    public void beeindigen(@PathVariable("id") Long id) {
         LOGGER.debug("beeindigen Polis met id " + id);
         polisService.beeindigen(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/lijst")
+    @RequestMapping(method = RequestMethod.GET, value = "/lijst/{relatieId}")
     @ResponseBody
-    public List<JsonPolis> lijst(@QueryParam("relatieId") String relatieId) {
+    public List<JsonPolis> lijst(@PathVariable("relatieId") String relatieId) {
         LOGGER.debug("Ophalen alle polissen voor Relatie " + relatieId);
         //        Relatie relatie = (Relatie) gebruikerService.lees(Long.valueOf(relatieId));
         Long relatie = Long.valueOf(relatieId);
@@ -80,9 +76,9 @@ public class PolisController {
         return result;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/lijstBijBedrijf")
+    @RequestMapping(method = RequestMethod.GET, value = "/lijstBijBedrijf/{bedrijfId}")
     @ResponseBody
-    public List<JsonPolis> lijstBijBedrijf(@QueryParam("bedrijfId") Long bedrijfId) {
+    public List<JsonPolis> lijstBijBedrijf(@PathVariable("bedrijfId") Long bedrijfId) {
         LOGGER.debug("Ophalen alle polissen voor Bedrijf " + bedrijfId);
 
         List<JsonPolis> polissen = new ArrayList<>();
@@ -95,23 +91,25 @@ public class PolisController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/opslaan")
     @ResponseBody
-    public void opslaan(@RequestBody JsonPolis jsonPolis) {
+    public Long opslaan(@RequestBody JsonPolis jsonPolis) {
         LOGGER.debug("Opslaan " + ReflectionToStringBuilder.toString(jsonPolis));
 
         Polis polis = mapper.map(jsonPolis, Polis.class);
         polisService.opslaan(polis);
+
+        return polis.getId();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/verwijder")
+    @RequestMapping(method = RequestMethod.GET, value = "/verwijder/{id}")
     @ResponseBody
-    public void verwijder(@QueryParam("id") Long id) {
+    public void verwijder(@PathVariable("id") Long id) {
         LOGGER.debug("verwijderen Polis met id " + id);
         polisService.verwijder(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/zoekOpPolisNummer")
+    @RequestMapping(method = RequestMethod.GET, value = "/zoekOpPolisNummer/{polisNummer}")
     @ResponseBody
-    public JsonPolis zoekOpPolisNummer(@QueryParam("polisNummer") String polisNummer) {
+    public JsonPolis zoekOpPolisNummer(@PathVariable("polisNummer") String polisNummer) {
         return mapper.map(polisService.zoekOpPolisNummer(polisNummer), JsonPolis.class);
     }
 }

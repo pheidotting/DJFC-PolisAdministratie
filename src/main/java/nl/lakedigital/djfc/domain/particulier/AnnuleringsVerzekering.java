@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-@Audited
 
+@Audited
 @Component
 @Entity
 @Table(name = "POLIS")

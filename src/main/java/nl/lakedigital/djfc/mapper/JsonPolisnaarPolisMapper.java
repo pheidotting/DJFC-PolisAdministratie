@@ -15,14 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
-import static com.google.common.collect.Iterables.filter;
-import static com.google.common.collect.Iterables.getFirst;
-import static com.google.common.collect.Iterables.getOnlyElement;
+import static com.google.common.collect.Iterables.*;
 
 @Component
 public class JsonPolisnaarPolisMapper extends AbstractMapper<JsonPolis, Polis> implements JsonMapper{
@@ -35,7 +30,7 @@ public class JsonPolisnaarPolisMapper extends AbstractMapper<JsonPolis, Polis> i
 
     @Override
     public Polis map(JsonPolis jsonPolis, Object parent, Object bestaandObject) {
-        String patternDatum = "dd-MM-yyyy";
+        String patternDatum = "yyyy-MM-dd";
 
         LocalDate ingangsDatum = null;
         if (jsonPolis.getIngangsDatum() != null && !"".equals(jsonPolis.getIngangsDatum())) {
@@ -51,20 +46,20 @@ public class JsonPolisnaarPolisMapper extends AbstractMapper<JsonPolis, Polis> i
         }
 
         Polis polis = null;
+        SoortEntiteit soortEntiteit = null;
+        Long entiteitId = null;
+        if (jsonPolis.getBedrijf() != null) {
+            soortEntiteit = SoortEntiteit.BEDRIJF;
+            entiteitId = Long.valueOf(jsonPolis.getBedrijf());
+        } else if (jsonPolis.getRelatie() != null && jsonPolis.getRelatie() != "") {
+            soortEntiteit = SoortEntiteit.RELATIE;
+            entiteitId = Long.valueOf(jsonPolis.getRelatie());
+        }
         if (jsonPolis.getId() == null || jsonPolis.getId() == 0L) {
-            SoortEntiteit soortEntiteit=null;
-            Long entiteitId = null;
-            if(jsonPolis.getBedrijfsId()!=null){
-                soortEntiteit=SoortEntiteit.BEDRIJF;
-                entiteitId=jsonPolis.getBedrijfsId();
-            }else if (jsonPolis.getRelatie()!=null&&jsonPolis.getRelatie()!=""){
-                soortEntiteit=SoortEntiteit.RELATIE;
-                entiteitId=Long.valueOf(jsonPolis.getRelatie());
-            }
-
             polis = getOnlyElement(filter(polissen, new PolisOpSchermNaamPredicate(jsonPolis.getSoort()))).nieuweInstantie(soortEntiteit,entiteitId);
         } else {
             polis = polisService.lees(jsonPolis.getId());
+            polis.setSoortEntiteitEnEntiteitId(soortEntiteit, entiteitId);
         }
 
         if (jsonPolis.getStatus() != null) {
@@ -88,9 +83,6 @@ public class JsonPolisnaarPolisMapper extends AbstractMapper<JsonPolis, Polis> i
         polis.setMaatschappij(Long.valueOf(jsonPolis.getMaatschappij()));
         if (StringUtils.isNotEmpty(jsonPolis.getRelatie())) {
             polis.setRelatie(Long.valueOf(jsonPolis.getRelatie()));
-        }
-        if (jsonPolis.getBedrijfsId() != null) {
-            polis.setBedrijf(Long.valueOf(jsonPolis.getBedrijfsId()));
         }
         polis.setOmschrijvingVerzekering(jsonPolis.getOmschrijvingVerzekering());
 

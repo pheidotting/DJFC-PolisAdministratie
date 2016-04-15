@@ -93,10 +93,14 @@ public abstract class Polis implements Serializable, Cloneable {
     }
 
     public Polis(SoortEntiteit soortEntiteit, Long entiteitId) {
-        if(soortEntiteit==SoortEntiteit.RELATIE){
-            this.relatie=entiteitId;
-        }else if(soortEntiteit==SoortEntiteit.BEDRIJF){
-            this.bedrijf=entiteitId;
+        setSoortEntiteitEnEntiteitId(soortEntiteit, entiteitId);
+    }
+
+    public void setSoortEntiteitEnEntiteitId(SoortEntiteit soortEntiteit, Long entiteitId) {
+        if (soortEntiteit == SoortEntiteit.RELATIE) {
+            this.relatie = entiteitId;
+        } else if (soortEntiteit == SoortEntiteit.BEDRIJF) {
+            this.bedrijf = entiteitId;
         }
     }
 
