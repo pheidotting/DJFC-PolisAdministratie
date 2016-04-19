@@ -78,6 +78,27 @@ public class SchadeRepository {
         getTransaction().commit();
     }
 
+    public void opslaan(SoortSchade soortSchade) {
+        getTransaction().begin();
+
+        LOGGER.info("Opslaan {}", ReflectionToStringBuilder.toString(soortSchade, ToStringStyle.SHORT_PREFIX_STYLE));
+        if (soortSchade.getId() == null) {
+            getSession().save(soortSchade);
+        } else {
+            getSession().merge(soortSchade);
+        }
+
+        getTransaction().commit();
+    }
+
+    public void verwijder(SoortSchade soortSchade) {
+        getTransaction().begin();
+
+        getSession().delete(soortSchade);
+
+        getTransaction().commit();
+    }
+
     public List<Schade> alleSchades(Long polis) {
         getTransaction().begin();
 

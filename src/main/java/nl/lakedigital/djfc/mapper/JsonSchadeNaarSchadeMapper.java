@@ -4,6 +4,8 @@ import nl.lakedigital.djfc.commons.json.JsonSchade;
 import nl.lakedigital.djfc.domain.Bedrag;
 import nl.lakedigital.djfc.domain.Schade;
 import nl.lakedigital.djfc.service.SchadeService;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -21,8 +23,8 @@ public class JsonSchadeNaarSchadeMapper extends AbstractMapper<JsonSchade, Schad
 
     @Override
     public Schade map(JsonSchade json, Object parent, Object bestaandObject) {
-        String patternDatumTijd = "dd-MM-yyyy HH:mm";
-        String patternDatum = "dd-MM-yyyy";
+        String patternDatumTijd = "yyyy-MM-dd HH:mm";
+        String patternDatum = "yyyy-MM-dd";
 
         LocalDate datumAfgehandeld = null;
         if (json.getDatumAfgehandeld() != null) {
@@ -35,7 +37,6 @@ public class JsonSchadeNaarSchadeMapper extends AbstractMapper<JsonSchade, Schad
         } else {
             schade = schadeService.lees(json.getId());
         }
-        schade.setId(json.getId());
 
         if (json.getDatumTijdMelding() != null) {
             LocalDateTime datumTijdMelding = LocalDateTime.parse(json.getDatumTijdMelding(), DateTimeFormat.forPattern(patternDatumTijd));
@@ -56,6 +57,9 @@ public class JsonSchadeNaarSchadeMapper extends AbstractMapper<JsonSchade, Schad
         schade.setOmschrijving(json.getOmschrijving());
         schade.setSchadeNummerMaatschappij(json.getSchadeNummerMaatschappij());
         schade.setSchadeNummerTussenPersoon(json.getSchadeNummerTussenPersoon());
+
+        LOGGER.debug("In : {}", ReflectionToStringBuilder.toString(json, ToStringStyle.SHORT_PREFIX_STYLE));
+        LOGGER.debug("Uit : {}", ReflectionToStringBuilder.toString(schade, ToStringStyle.SHORT_PREFIX_STYLE));
 
         return schade;
     }

@@ -12,15 +12,22 @@ import org.springframework.stereotype.Component;
 public class SchadeNaarJsonSchadeMapper extends AbstractMapper<Schade, JsonSchade> implements JsonMapper {
     private final static Logger LOGGER = LoggerFactory.getLogger(SchadeNaarJsonSchadeMapper.class);
 
+    String patternDatumTijd = "yyyy-MM-dd HH:mm";
+    String patternDatum = "yyyy-MM-dd";
+
     @Override
     public JsonSchade map(Schade schade, Object parent, Object bestaandObject) {
         JsonSchade jsonSchade = new JsonSchade();
 
+        LOGGER.debug("DatumAfgehandeld {}", jsonSchade.getDatumAfgehandeld());
+        LOGGER.debug("DatumAfgehandeld {}", schade.getDatumAfgehandeld());
         if (schade.getDatumAfgehandeld() != null) {
-            jsonSchade.setDatumAfgehandeld(schade.getDatumAfgehandeld().toString("dd-MM-yyyy"));
+            LOGGER.debug("sadfowejfojwejfjoewjfoijwaeojfaijwoijawejfjweafijwaoiejfojwaeoijf");
+            jsonSchade.setDatumAfgehandeld(schade.getDatumAfgehandeld().toString(patternDatum));
         }
-        jsonSchade.setDatumTijdMelding(schade.getDatumTijdMelding().toString("dd-MM-yyyy HH:mm"));
-        jsonSchade.setDatumTijdSchade(schade.getDatumTijdSchade().toString("dd-MM-yyyy HH:mm"));
+        LOGGER.debug("DatumAfgehandeld {}", jsonSchade.getDatumAfgehandeld());
+        jsonSchade.setDatumTijdMelding(schade.getDatumTijdMelding().toString(patternDatumTijd));
+        jsonSchade.setDatumTijdSchade(schade.getDatumTijdSchade().toString(patternDatumTijd));
         if (schade.getEigenRisico() != null) {
             jsonSchade.setEigenRisico(schade.getEigenRisico().getBedrag().toString());
         }
@@ -39,7 +46,8 @@ public class SchadeNaarJsonSchadeMapper extends AbstractMapper<Schade, JsonSchad
         }
         jsonSchade.setPolis(jsonSchade.getPolis());
 
-        LOGGER.debug("{}", ReflectionToStringBuilder.toString(jsonSchade, ToStringStyle.SHORT_PREFIX_STYLE));
+        LOGGER.debug("In: {}", ReflectionToStringBuilder.toString(schade, ToStringStyle.SHORT_PREFIX_STYLE));
+        LOGGER.debug("Uit: {}", ReflectionToStringBuilder.toString(jsonSchade, ToStringStyle.SHORT_PREFIX_STYLE));
 
         return jsonSchade;
     }

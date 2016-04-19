@@ -148,7 +148,12 @@ public class Schade implements Comparable, Serializable {
     }
 
     public LocalDate getDatumAfgehandeld() {
-        return new LocalDate(datumAfgehandeld);
+        if (datumAfgehandeld != null) {
+            return
+
+                    new LocalDate(datumAfgehandeld);
+        }
+        return null;
     }
 
     public void setDatumAfgehandeld(LocalDate datumAfgehandeld) {

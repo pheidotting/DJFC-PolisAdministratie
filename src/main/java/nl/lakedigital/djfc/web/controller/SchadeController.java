@@ -10,11 +10,9 @@ import nl.lakedigital.djfc.mapper.Mapper;
 import nl.lakedigital.djfc.service.SchadeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
 import javax.ws.rs.QueryParam;
@@ -33,11 +31,13 @@ public class SchadeController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/opslaan")
     @ResponseBody
-    public void opslaan(@RequestBody JsonSchade jsonSchade) {
+    public Long opslaan(@RequestBody JsonSchade jsonSchade) {
         LOGGER.debug("{}", jsonSchade);
 
         Schade schade = mapper.map(jsonSchade, Schade.class);
         schadeService.opslaan(schade, jsonSchade.getSoortSchade(), jsonSchade.getPolis(), jsonSchade.getStatusSchade());
+
+        return schade.getId();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/lijst")
@@ -71,15 +71,25 @@ public class SchadeController {
         return result;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/lees")
+    @RequestMapping(method = RequestMethod.GET, value = "/lees/{id}")
     @ResponseBody
-    public JsonSchade lees(@QueryParam("id") String id) {
-        return mapper.map(schadeService.lees(Long.valueOf(id)), JsonSchade.class);
+    public JsonSchade lees(@PathVariable("id") String id) {
+        Schade schade = schadeService.lees(Long.valueOf(id));
+
+        if (schade == null) {
+            throw new ResourceNotFoundException();
+        }
+
+        return mapper.map(schade, JsonSchade.class);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/verwijder")
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public class ResourceNotFoundException extends RuntimeException {
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/verwijder/{id}")
     @ResponseBody
-    public void verwijder(@QueryParam("id") Long id) {
+    public void verwijder(@PathVariable("id") Long id) {
         LOGGER.debug("verwijderen Schade met id " + id);
         try {
             schadeService.verwijder(id);
