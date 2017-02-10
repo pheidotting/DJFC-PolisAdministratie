@@ -63,7 +63,7 @@ public class PolisNaarJsonPolisMapper extends AbstractMapper<Polis, JsonPolis> i
         return object instanceof Polis;
     }
     public static String zetBedragOm(Bedrag bedrag) {
-        String waarde = null;
+        String waarde;
         String[] x = bedrag.getBedrag().toString().split("\\.");
         if (x[1].length() == 1) {
             waarde = bedrag.getBedrag().toString() + "0";

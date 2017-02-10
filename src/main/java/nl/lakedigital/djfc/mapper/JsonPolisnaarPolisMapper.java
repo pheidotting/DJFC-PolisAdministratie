@@ -45,7 +45,7 @@ public class JsonPolisnaarPolisMapper extends AbstractMapper<JsonPolis, Polis> i
             prolongatieDatum = LocalDate.parse(jsonPolis.getProlongatieDatum(), DateTimeFormat.forPattern(patternDatum));
         }
 
-        Polis polis = null;
+        Polis polis;
         SoortEntiteit soortEntiteit = null;
         Long entiteitId = null;
         //        if (jsonPolis.getBedrijf() != null) {

@@ -11,6 +11,8 @@ import org.joda.time.LocalDateTime;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -26,6 +28,8 @@ import static org.junit.Assert.fail;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext-it.xml")
 public class SchadeTest {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SchadeTest.class);
+
     private final Long ingegelogdeGebruiker = 46L;
     private final String trackAndTraceId = UUID.randomUUID().toString();
     private String patternDatumTijd = "yyyy-MM-dd HH:mm";
@@ -102,6 +106,7 @@ public class SchadeTest {
             schadeClient.lees(jsonSchade.getId().toString());
             fail("Error verwacht");
         } catch (RuntimeException nre) {
+            LOGGER.error(nre);
         }
 
         schadeRepository.verwijderStatusSchade(newArrayList(statusSchade));

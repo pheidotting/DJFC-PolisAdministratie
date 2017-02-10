@@ -2,7 +2,6 @@ package nl.lakedigital.djfc.mapper;
 
 
 import com.google.common.base.Predicate;
-import nl.lakedigital.djfc.commons.json.AbstracteJsonEntiteitMetSoortEnId;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
@@ -23,7 +22,7 @@ public class Mapper {
     private List<JsonMapper> mappers;
 
     public <T> T map(final Object objectIn, final Class<T> clazz) {
-        Object objectUit = null;
+        Object objectUit;
 
         LOGGER.debug("Mappen van {}", ReflectionToStringBuilder.toString(objectIn, ToStringStyle.SHORT_PREFIX_STYLE));
 

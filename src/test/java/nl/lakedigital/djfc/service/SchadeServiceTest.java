@@ -120,7 +120,6 @@ public class SchadeServiceTest extends EasyMockSupport {
         SoortSchade soortSchade = createMock(SoortSchade.class);
         List<SoortSchade> soortSchades = new ArrayList<>();
         soortSchades.add(soortSchade);
-        Polis polis = createMock(Polis.class);
         StatusSchade statusSchade = createMock(StatusSchade.class);
 
         expect(schadeRepository.soortenSchade(soortSchadeString)).andReturn(soortSchades);

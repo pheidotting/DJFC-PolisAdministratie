@@ -31,7 +31,7 @@ public class JsonSchadeNaarSchadeMapper extends AbstractMapper<JsonSchade, Schad
             datumAfgehandeld = LocalDate.parse(json.getDatumAfgehandeld(), DateTimeFormat.forPattern(patternDatum));
         }
 
-        Schade schade = null;
+        Schade schade;
         if (json.getId() == null) {
             schade = new Schade();
         } else {
