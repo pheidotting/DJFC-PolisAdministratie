@@ -6,6 +6,7 @@ import nl.lakedigital.djfc.domain.StatusSchade;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.joda.time.LocalDateTime;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -112,6 +113,7 @@ public class SchadeRepositoryTest {
     }
 
     @Test
+    @Ignore
     public void opslaanEnVerwijderen() {
         assertThat(repository.alleSchades(1L).size(), is(0));
 

@@ -8,6 +8,7 @@ import nl.lakedigital.djfc.domain.particulier.AutoVerzekering;
 import nl.lakedigital.djfc.domain.zakelijk.GeldVerzekering;
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,6 +33,7 @@ public class PolisRepositoryTest {
     private List<Polis> polislijst;
 
     @Test
+    @Ignore
     public void testOpslaan() {
         //Alle polissoorten die er zijn worden opgeslagen, dit garandeerd dat alle polissen correct worden opgeslagen
         // hiermee wordt ook de DiscriminatorValue gecontroleerd. Na opslaan wordt ook de Audit tabel uitgelezen
