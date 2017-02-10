@@ -173,34 +173,6 @@ public class Schade implements Serializable {
         this.omschrijving = omschrijving;
     }
 
-    //    @Override
-    //    public boolean equals(Object o) {
-    //        if (this == o) {
-    //            return true;
-    //        }
-    //
-    //        if (!(o instanceof Schade)) {
-    //            return false;
-    //        }
-    //
-    //        Schade schade = (Schade) o;
-    //
-    //        LocalDateTime datumTijdSchade1 =
-    //
-    //                getDatumTijdSchade();
-    //        LocalDateTime datumTijdSchade2 = schade.getDatumTijdSchade();
-    //        LocalDateTime datumTijdMelding1 = getDatumTijdMelding();
-    //        LocalDateTime datumTijdMelding2 = schade.getDatumTijdMelding();
-    //        LocalDate datumAfgehandeld1 = getDatumAfgehandeld();
-    //        LocalDate datumAfgehandeld2 = schade.getDatumAfgehandeld();
-    //        return new EqualsBuilder().append(getId(), schade.getId()).append(getPolis(), schade.getPolis()).append(getSchadeNummerMaatschappij(), schade.getSchadeNummerMaatschappij()).append(getSchadeNummerTussenPersoon(), schade.getSchadeNummerTussenPersoon()).append(getSoortSchade(), schade.getSoortSchade()).append(getSoortSchadeOngedefinieerd(), schade.getSoortSchadeOngedefinieerd()).append(getLocatie(), schade.getLocatie()).append(getStatusSchade(), schade.getStatusSchade()).append(datumTijdSchade1, datumTijdSchade2).append(datumTijdMelding1, datumTijdMelding2).append(datumAfgehandeld1, datumAfgehandeld2).append(getEigenRisico(), schade.getEigenRisico()).append(getOmschrijving(), schade.getOmschrijving()).isEquals();
-    //    }
-    //
-    //    @Override
-    //    public int hashCode() {
-    //        return new HashCodeBuilder(17, 37).append(getId()).append(getPolis()).append(getSchadeNummerMaatschappij()).append(getSchadeNummerTussenPersoon()).append(getSoortSchade()).append(getSoortSchadeOngedefinieerd()).append(getLocatie()).append(getStatusSchade()).append(getDatumTijdSchade()).append(getDatumTijdMelding()).append(getDatumAfgehandeld()).append(getEigenRisico()).append(getOmschrijving()).toHashCode();
-    //    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
