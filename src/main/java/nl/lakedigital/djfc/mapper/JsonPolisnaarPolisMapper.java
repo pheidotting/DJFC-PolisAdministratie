@@ -48,13 +48,13 @@ public class JsonPolisnaarPolisMapper extends AbstractMapper<JsonPolis, Polis> i
         Polis polis = null;
         SoortEntiteit soortEntiteit = null;
         Long entiteitId = null;
-        if (jsonPolis.getBedrijf() != null) {
-            soortEntiteit = SoortEntiteit.BEDRIJF;
-            entiteitId = Long.valueOf(jsonPolis.getBedrijf());
-        } else if (jsonPolis.getRelatie() != null && jsonPolis.getRelatie() != "") {
-            soortEntiteit = SoortEntiteit.RELATIE;
-            entiteitId = Long.valueOf(jsonPolis.getRelatie());
-        }
+        //        if (jsonPolis.getBedrijf() != null) {
+        //            soortEntiteit = SoortEntiteit.BEDRIJF;
+        //            entiteitId = Long.valueOf(jsonPolis.getBedrijf());
+        //        } else if (jsonPolis.getRelatie() != null && jsonPolis.getRelatie() != "") {
+        //            soortEntiteit = SoortEntiteit.RELATIE;
+        //            entiteitId = Long.valueOf(jsonPolis.getRelatie());
+        //        }
         if (jsonPolis.getId() == null || jsonPolis.getId() == 0L) {
             polis = getOnlyElement(filter(polissen, new PolisOpSchermNaamPredicate(jsonPolis.getSoort()))).nieuweInstantie(soortEntiteit,entiteitId);
         } else {
@@ -81,9 +81,9 @@ public class JsonPolisnaarPolisMapper extends AbstractMapper<JsonPolis, Polis> i
         }
 
         polis.setMaatschappij(Long.valueOf(jsonPolis.getMaatschappij()));
-        if (StringUtils.isNotEmpty(jsonPolis.getRelatie())) {
-            polis.setRelatie(Long.valueOf(jsonPolis.getRelatie()));
-        }
+        //        if (StringUtils.isNotEmpty(jsonPolis.getRelatie())) {
+        //            polis.setRelatie(Long.valueOf(jsonPolis.getRelatie()));
+        //        }
         polis.setOmschrijvingVerzekering(jsonPolis.getOmschrijvingVerzekering());
 
         LOGGER.debug(ReflectionToStringBuilder.toString(polis));

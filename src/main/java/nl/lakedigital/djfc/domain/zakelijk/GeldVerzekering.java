@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 @Audited
 
 @Component
@@ -17,6 +18,10 @@ import javax.persistence.Table;
 @DiscriminatorValue(value = "GD")
 public class GeldVerzekering extends Polis {
     public GeldVerzekering() {
+    }
+
+    public GeldVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+        super(soortEntiteit, entiteitId);
     }
 
     @Override
@@ -32,9 +37,5 @@ public class GeldVerzekering extends Polis {
     @Override
     public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new GeldVerzekering(soortEntiteit,entiteitId);
-    }
-
-    public GeldVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
-        super(soortEntiteit, entiteitId);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 @Audited
 
 @Component
@@ -17,6 +18,10 @@ import javax.persistence.Table;
 @DiscriminatorValue(value = "BV")
 public class BankspaarVerzekering extends Polis {
     public BankspaarVerzekering() {
+    }
+
+    public BankspaarVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+        super(soortEntiteit, entiteitId);
     }
 
     @Override
@@ -31,11 +36,7 @@ public class BankspaarVerzekering extends Polis {
     }
 
     @Override
-    public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public BankspaarVerzekering nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new BankspaarVerzekering(soortEntiteit,entiteitId);
-    }
-
-    public BankspaarVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
-        super(soortEntiteit, entiteitId);
     }
 }

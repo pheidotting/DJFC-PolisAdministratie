@@ -15,12 +15,12 @@ import javax.persistence.Table;
 @Component
 @Entity
 @Table(name = "POLIS")
-@DiscriminatorValue(value = "I")
-public class InboedelVerzekering extends Polis {
-    public InboedelVerzekering() {
+@DiscriminatorValue(value = "SV")
+public class SviSchadeverzekeringinzittende extends Polis {
+    public SviSchadeverzekeringinzittende() {
     }
 
-    public InboedelVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public SviSchadeverzekeringinzittende(SoortEntiteit soortEntiteit, Long entiteitId) {
         super(soortEntiteit, entiteitId);
     }
 
@@ -31,12 +31,11 @@ public class InboedelVerzekering extends Polis {
 
     @Override
     public String getSchermNaam() {
-        String pakket = this.getClass().getPackage().toString().replace("package ", "") + ".";
-        return this.getClass().getCanonicalName().replace("Verzekering", "").replace(pakket, "");
+        return "SviSchadeverzekeringinzittende";
     }
 
     @Override
-    public InboedelVerzekering nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
-        return new InboedelVerzekering(soortEntiteit,entiteitId);
+    public SviSchadeverzekeringinzittende nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
+        return new SviSchadeverzekeringinzittende(soortEntiteit, entiteitId);
     }
 }

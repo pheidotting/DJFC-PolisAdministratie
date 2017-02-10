@@ -10,13 +10,18 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+@Audited
+
 @Component
 @Entity
-@Audited
 @Table(name = "POLIS")
 @DiscriminatorValue(value = "BS")
 public class BromSnorfietsVerzekering extends Polis {
     public BromSnorfietsVerzekering() {
+    }
+
+    public BromSnorfietsVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+        super(soortEntiteit, entiteitId);
     }
 
     @Override
@@ -31,11 +36,7 @@ public class BromSnorfietsVerzekering extends Polis {
     }
 
     @Override
-    public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public BromSnorfietsVerzekering nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new BromSnorfietsVerzekering(soortEntiteit,entiteitId);
-    }
-
-    public BromSnorfietsVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
-        super(soortEntiteit, entiteitId);
     }
 }

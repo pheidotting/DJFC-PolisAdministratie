@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 @Audited
 
 @Component
@@ -17,6 +18,10 @@ import javax.persistence.Table;
 @DiscriminatorValue(value = "OA")
 public class OldtimerAutoVerzekering extends Polis {
     public OldtimerAutoVerzekering() {
+    }
+
+    public OldtimerAutoVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+        super(soortEntiteit, entiteitId);
     }
 
     @Override
@@ -31,12 +36,8 @@ public class OldtimerAutoVerzekering extends Polis {
     }
 
     @Override
-    public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public OldtimerAutoVerzekering nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new OldtimerAutoVerzekering(soortEntiteit,entiteitId);
-    }
-
-    public OldtimerAutoVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
-        super(soortEntiteit, entiteitId);
     }
 }
 

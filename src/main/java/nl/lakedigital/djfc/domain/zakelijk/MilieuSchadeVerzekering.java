@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 @Audited
 
 @Component
@@ -17,6 +18,10 @@ import javax.persistence.Table;
 @DiscriminatorValue(value = "MS")
 public class MilieuSchadeVerzekering extends Polis {
     public MilieuSchadeVerzekering() {
+    }
+
+    public MilieuSchadeVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+        super(soortEntiteit, entiteitId);
     }
 
     @Override
@@ -32,9 +37,5 @@ public class MilieuSchadeVerzekering extends Polis {
     @Override
     public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new MilieuSchadeVerzekering(soortEntiteit,entiteitId);
-    }
-
-    public MilieuSchadeVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
-        super(soortEntiteit, entiteitId);
     }
 }

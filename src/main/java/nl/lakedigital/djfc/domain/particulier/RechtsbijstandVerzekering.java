@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 @Audited
 
 @Component
@@ -19,10 +20,14 @@ public class RechtsbijstandVerzekering extends Polis {
     public RechtsbijstandVerzekering() {
     }
 
+    public RechtsbijstandVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+        super(soortEntiteit, entiteitId);
+    }
+
     @Override
-	public SoortVerzekering getSoortVerzekering() {
-		return SoortVerzekering.PARTICULIER;
-	}
+    public SoortVerzekering getSoortVerzekering() {
+        return SoortVerzekering.PARTICULIER;
+    }
 
     @Override
     public String getSchermNaam() {
@@ -31,11 +36,7 @@ public class RechtsbijstandVerzekering extends Polis {
     }
 
     @Override
-    public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public RechtsbijstandVerzekering nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new RechtsbijstandVerzekering(soortEntiteit,entiteitId);
-    }
-
-    public RechtsbijstandVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
-        super(soortEntiteit, entiteitId);
     }
 }

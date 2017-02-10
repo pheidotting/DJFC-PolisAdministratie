@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 @Audited
 
 @Component
@@ -19,6 +20,10 @@ public class ZakelijkeReisVerzekering extends Polis {
     public ZakelijkeReisVerzekering() {
     }
 
+    public ZakelijkeReisVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+        super(soortEntiteit, entiteitId);
+    }
+
     @Override
     public SoortVerzekering getSoortVerzekering() {
         return SoortVerzekering.ZAKELIJK;
@@ -26,15 +31,11 @@ public class ZakelijkeReisVerzekering extends Polis {
 
     @Override
     public String getSchermNaam() {
-        return "Zakelijke Reis";
+        return "ZakelijkeReis";
     }
 
     @Override
     public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new ZakelijkeReisVerzekering(soortEntiteit,entiteitId);
-    }
-
-    public ZakelijkeReisVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
-        super(soortEntiteit, entiteitId);
     }
 }

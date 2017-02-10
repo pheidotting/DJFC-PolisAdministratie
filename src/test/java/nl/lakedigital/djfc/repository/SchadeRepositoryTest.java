@@ -111,52 +111,6 @@ public class SchadeRepositoryTest {
         repository.verwijder(newArrayList(schade1, schade2));
     }
 
-    //    @Test
-    //    public void alleSchadesBijRelatie() {
-    //        Polis polis1 = new FietsVerzekering();
-    //        Polis polis2 = new FietsVerzekering();
-    //
-    //        StatusSchade statusSchade = maakStatusSchade("status");
-    //
-    //        repository.getTransaction().begin();
-    //        polis1.setMaatschappij(1L);
-    //        polis2.setMaatschappij(2L);
-    //
-    //        repository.getSession().persist(statusSchade);
-    //
-    //        repository.getSession().persist(polis1);
-    //        repository.getSession().persist(polis2);
-    //
-    //        polis1.setRelatie(1L);
-    //        polis2.setRelatie(2L);
-    //
-    //        repository.getSession().merge(polis1);
-    //        repository.getSession().merge(polis2);
-    //
-    //        repository.getTransaction().commit();
-    //
-    //        Schade schade1 = maakSchade("schadeNummer1", statusSchade);
-    //        Schade schade2 = maakSchade("schadeNummer2", statusSchade);
-    //        Schade schade3 = maakSchade("schadeNummer3", statusSchade);
-    //
-    //        schade1.setPolis(polis1.getId());
-    //        polis1.getSchades().add(schade1);
-    //
-    //        schade2.setPolis(polis2.getId());
-    //        polis2.getSchades().add(schade2);
-    //
-    //        schade3.setPolis(polis2.getId());
-    //        polis2.getSchades().add(schade3);
-    //
-    //        repository.opslaan(schade1);
-    //        repository.opslaan(schade2);
-    //        repository.opslaan(schade3);
-    //
-    //        assertEquals(1, repository.alleSchadesBijRelatie(1L).size());
-    //        assertEquals(2, repository.alleSchadesBijRelatie(2L).size());
-    //
-    //    }
-
     @Test
     public void opslaanEnVerwijderen() {
         assertThat(repository.alleSchades(1L).size(), is(0));
@@ -176,6 +130,13 @@ public class SchadeRepositoryTest {
 
         assertThat(repository.alleSchades(1L).size(), is(2));
 
+        schade2.setOmschrijving("nwOmschrijving");
+        repository.opslaan(schade2);
+
+        assertThat(repository.alleSchades(1L).size(), is(2));
+        assertThat(repository.lees(schade1.getId()), is(schade1));
+        assertThat(repository.lees(schade2.getId()), is(schade2));
+
         repository.verwijder(schade1);
 
         assertThat(repository.alleSchades(1L).size(), is(1));
@@ -193,6 +154,8 @@ public class SchadeRepositoryTest {
         StatusSchade statusSchade = maakStatusSchade("a");
 
         repository.opslaan(statusSchade);
+        statusSchade.setStatus("nwStatus");
+        repository.opslaan(statusSchade);
 
         Schade schade1 = maakSchade("1", statusSchade, 1L);
         Schade schade2 = maakSchade("2", statusSchade, 2L);
@@ -204,6 +167,27 @@ public class SchadeRepositoryTest {
 
         repository.verwijder(newArrayList(schade1, schade2));
         repository.verwijderStatusSchade(newArrayList(statusSchade));
+    }
+
+    @Test
+    public void testOpslaanEnVerwijderenSoortSchade() {
+        SoortSchade soortSchade = maakSoortSchade("omschr");
+
+        repository.opslaan(soortSchade);
+
+        assertThat(repository.soortenSchade().size(), is(1));
+        Long id = repository.soortenSchade().get(0).getId();
+
+        soortSchade.setOmschrijving("blabla");
+
+        repository.opslaan(soortSchade);
+
+        assertThat(repository.soortenSchade().size(), is(1));
+        assertThat(repository.soortenSchade().get(0).getId(), is(id));
+
+        repository.verwijder(soortSchade);
+
+        assertThat(repository.soortenSchade().size(), is(0));
     }
 
     private Schade maakSchade(String schadeNummer, StatusSchade statusSchade, Long polis) {
@@ -223,5 +207,13 @@ public class SchadeRepositoryTest {
         statusSchade.setIngebruik(true);
 
         return statusSchade;
+    }
+
+    private SoortSchade maakSoortSchade(String omschrijving) {
+        SoortSchade soortSchade = new SoortSchade();
+        soortSchade.setIngebruik(true);
+        soortSchade.setOmschrijving(omschrijving);
+
+        return soortSchade;
     }
 }

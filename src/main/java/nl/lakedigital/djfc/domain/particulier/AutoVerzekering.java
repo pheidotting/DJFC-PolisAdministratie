@@ -11,12 +11,17 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Audited
+
 @Component
 @Entity
 @Table(name = "POLIS")
 @DiscriminatorValue(value = "A")
 public class AutoVerzekering extends Polis {
     public AutoVerzekering() {
+    }
+
+    public AutoVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+        super(soortEntiteit, entiteitId);
     }
 
     @Override
@@ -30,13 +35,8 @@ public class AutoVerzekering extends Polis {
         return this.getClass().getCanonicalName().replace("Verzekering", "").replace(pakket, "");
     }
 
-
     @Override
-    public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public AutoVerzekering nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new AutoVerzekering(soortEntiteit,entiteitId);
-    }
-
-    public AutoVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
-        super(soortEntiteit, entiteitId);
     }
 }

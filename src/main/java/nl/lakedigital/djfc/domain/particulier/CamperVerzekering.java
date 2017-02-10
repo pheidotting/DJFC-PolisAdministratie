@@ -10,12 +10,16 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Component
 @Audited
+
+@Component
 @Entity
 @Table(name = "POLIS")
 @DiscriminatorValue(value = "C")
 public class CamperVerzekering extends Polis {
+    public CamperVerzekering() {
+    }
+
     public CamperVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
         super(soortEntiteit, entiteitId);
     }
@@ -31,10 +35,8 @@ public class CamperVerzekering extends Polis {
         return this.getClass().getCanonicalName().replace("Verzekering", "").replace(pakket, "");
     }
 
-    public CamperVerzekering() {
-    }
-
     @Override
-    public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public CamperVerzekering nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new CamperVerzekering(soortEntiteit,entiteitId);
-    }}
+    }
+}

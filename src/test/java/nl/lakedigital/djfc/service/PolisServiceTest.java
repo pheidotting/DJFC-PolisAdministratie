@@ -28,6 +28,9 @@ import static org.junit.Assert.*;
 
 @RunWith(EasyMockRunner.class)
 public class PolisServiceTest extends EasyMockSupport {
+    private final long entiteitId = 46L;
+    private final SoortEntiteit soortEntiteit = SoortEntiteit.RELATIE;
+
     @TestSubject
     private PolisService polisService = new PolisService();
 
@@ -59,7 +62,7 @@ public class PolisServiceTest extends EasyMockSupport {
     public void testOpslaanPolis() {
         final Long id = 58L;
 
-        AutoVerzekering polis = new AutoVerzekering();
+        AutoVerzekering polis = new AutoVerzekering(soortEntiteit, entiteitId);
 
         polisRepository.opslaan(polis);
         expectLastCall().andDelegateTo(new PolisRepository() {
@@ -78,7 +81,7 @@ public class PolisServiceTest extends EasyMockSupport {
 
     @Test
     public void testZoekOpPolisNummer() {
-        CamperVerzekering camperVerzekering = new CamperVerzekering();
+        CamperVerzekering camperVerzekering = new CamperVerzekering(soortEntiteit, entiteitId);
 
         expect(polisRepository.zoekOpPolisNummer("1234")).andReturn(camperVerzekering);
 
@@ -99,7 +102,7 @@ public class PolisServiceTest extends EasyMockSupport {
 
     @Test
     public void testVerwijder() {
-        MobieleApparatuurVerzekering verzekering = new MobieleApparatuurVerzekering();
+        MobieleApparatuurVerzekering verzekering = new MobieleApparatuurVerzekering(soortEntiteit, entiteitId);
         expect(polisRepository.lees(1L)).andReturn(verzekering);
 
         polisRepository.verwijder(verzekering);
@@ -112,11 +115,11 @@ public class PolisServiceTest extends EasyMockSupport {
 
     @Test
     public void testAllePolisSoorten() {
-        AnnuleringsVerzekering annuleringsVerzekering = new AnnuleringsVerzekering();
-        InboedelVerzekering inboedelVerzekering = new InboedelVerzekering();
+        AnnuleringsVerzekering annuleringsVerzekering = new AnnuleringsVerzekering(soortEntiteit, entiteitId);
+        InboedelVerzekering inboedelVerzekering = new InboedelVerzekering(soortEntiteit, entiteitId);
 
-        AanhangerVerzekering aanhangerVerzekering = new AanhangerVerzekering();
-        GeldVerzekering geldVerzekering = new GeldVerzekering();
+        AanhangerVerzekering aanhangerVerzekering = new AanhangerVerzekering(soortEntiteit, entiteitId);
+        GeldVerzekering geldVerzekering = new GeldVerzekering(soortEntiteit, entiteitId);
 
         List<Polis> polissen = new ArrayList<>();
         polissen.add(annuleringsVerzekering);

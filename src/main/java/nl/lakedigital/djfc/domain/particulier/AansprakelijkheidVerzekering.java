@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
 @Audited
 
 @Component
@@ -35,7 +36,7 @@ public class AansprakelijkheidVerzekering extends Polis {
     }
 
     @Override
-    public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public AansprakelijkheidVerzekering nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new AansprakelijkheidVerzekering(soortEntiteit,entiteitId);
     }
 }

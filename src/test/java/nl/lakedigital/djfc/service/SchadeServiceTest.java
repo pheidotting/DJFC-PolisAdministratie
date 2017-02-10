@@ -33,7 +33,7 @@ public class SchadeServiceTest extends EasyMockSupport {
         SoortEntiteit soortEntiteit = SoortEntiteit.RELATIE;
         Long entiteitId = 5L;
 
-        Polis polis = new AutoVerzekering();
+        Polis polis = new AutoVerzekering(soortEntiteit, entiteitId);
         polis.setId(4L);
         List<Polis> polissen = new ArrayList<>();
         polissen.add(polis);

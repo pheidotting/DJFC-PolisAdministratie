@@ -149,26 +149,6 @@ public class SchadeRepository {
 
         return result;
     }
-    //
-    //    public List<Schade> alleSchadesBijRelatie(Long relatie) {
-    //        getTransaction().begin();
-    //
-    //        Query query = getSession().getNamedQuery("Schade.allesVanRelatie");
-    //        query.setParameter("relatie", relatie);
-    //
-    //        List<Schade> result = query.list();
-    //
-    //        getTransaction().commit();
-    //
-    //        return result;
-    //    }
-
-    //    public List<Schade> allesBijSchade(Long schade) {
-    //        TypedQuery<Schade> query = getEm().createNamedQuery("Schade.allesBijSchade", Schade.class);
-    //        query.setParameter("schade", schade);
-    //
-    //        return query.getResultList();
-    //    }
 
     public void verwijder(Schade schade) {
         List<Schade> schadesen = new ArrayList();

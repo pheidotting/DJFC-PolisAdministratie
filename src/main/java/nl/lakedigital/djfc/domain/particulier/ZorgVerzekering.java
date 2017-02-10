@@ -9,14 +9,18 @@ import org.springframework.stereotype.Component;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-@Audited
 
+@Audited
 @Component
 @Entity
 @Table(name = "POLIS")
 @DiscriminatorValue(value = "Z")
 public class ZorgVerzekering extends Polis {
     public ZorgVerzekering() {
+    }
+
+    public ZorgVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+        super(soortEntiteit, entiteitId);
     }
 
     @Override
@@ -31,11 +35,7 @@ public class ZorgVerzekering extends Polis {
     }
 
     @Override
-    public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public ZorgVerzekering nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new ZorgVerzekering(soortEntiteit,entiteitId);
-    }
-
-    public ZorgVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
-        super(soortEntiteit, entiteitId);
     }
 }

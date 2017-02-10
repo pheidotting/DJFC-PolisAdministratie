@@ -24,6 +24,8 @@ import static org.junit.Assert.fail;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("classpath:applicationContext-it.xml")
 public class SchadeTest {
+    private final Long ingegelogdeGebruiker = 46L;
+    private final String trackAndTraceId = UUID.randomUUID().toString();
     private String patternDatumTijd = "yyyy-MM-dd HH:mm";
     private String patternDatum = "yyyy-MM-dd";
 
@@ -46,7 +48,7 @@ public class SchadeTest {
         jsonSchade.setSchadeNummerMaatschappij("12345");
         jsonSchade.setStatusSchade("blabla");
 
-        jsonSchade.setId(schadeClient.opslaan(jsonSchade));
+        jsonSchade.setId(schadeClient.opslaan(jsonSchade, ingegelogdeGebruiker, trackAndTraceId));
 
         controleerOpgeslagenSchade(jsonSchade);
 
@@ -93,7 +95,7 @@ public class SchadeTest {
 
         assertThat(schadeRepository.lees(jsonSchade.getId()).getSoortSchade(), is(soortSchade));
 
-        schadeClient.verwijder(jsonSchade.getId());
+        schadeClient.verwijder(jsonSchade.getId(), ingegelogdeGebruiker, trackAndTraceId);
         try {
             schadeClient.lees(jsonSchade.getId().toString());
             fail("Error verwacht");
@@ -105,7 +107,7 @@ public class SchadeTest {
     }
 
     private void controleerOpgeslagenSchade(JsonSchade schade) {
-        schadeClient.opslaan(schade);
+        schadeClient.opslaan(schade, ingegelogdeGebruiker, trackAndTraceId);
 
         JsonSchade s = schadeClient.lees(schade.getId().toString());
 

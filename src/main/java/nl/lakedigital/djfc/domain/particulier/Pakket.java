@@ -15,12 +15,12 @@ import javax.persistence.Table;
 @Component
 @Entity
 @Table(name = "POLIS")
-@DiscriminatorValue(value = "I")
-public class InboedelVerzekering extends Polis {
-    public InboedelVerzekering() {
+@DiscriminatorValue(value = "PK")
+public class Pakket extends Polis {
+    public Pakket() {
     }
 
-    public InboedelVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public Pakket(SoortEntiteit soortEntiteit, Long entiteitId) {
         super(soortEntiteit, entiteitId);
     }
 
@@ -36,7 +36,7 @@ public class InboedelVerzekering extends Polis {
     }
 
     @Override
-    public InboedelVerzekering nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
-        return new InboedelVerzekering(soortEntiteit,entiteitId);
+    public Pakket nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
+        return new Pakket(soortEntiteit, entiteitId);
     }
 }

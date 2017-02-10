@@ -11,12 +11,17 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Audited
+
 @Component
 @Entity
 @Table(name = "POLIS")
 @DiscriminatorValue(value = "AN")
 public class AnnuleringsVerzekering extends Polis {
     public AnnuleringsVerzekering() {
+    }
+
+    public AnnuleringsVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
+        super(soortEntiteit, entiteitId);
     }
 
     @Override
@@ -31,11 +36,7 @@ public class AnnuleringsVerzekering extends Polis {
     }
 
     @Override
-    public Polis nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
+    public AnnuleringsVerzekering nieuweInstantie(SoortEntiteit soortEntiteit, Long entiteitId) {
         return new AnnuleringsVerzekering(soortEntiteit,entiteitId);
-    }
-
-    public AnnuleringsVerzekering(SoortEntiteit soortEntiteit, Long entiteitId) {
-        super(soortEntiteit, entiteitId);
     }
 }
