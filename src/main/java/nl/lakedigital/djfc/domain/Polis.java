@@ -1,7 +1,5 @@
 package nl.lakedigital.djfc.domain;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.envers.Audited;
 import org.joda.time.LocalDate;
@@ -10,6 +8,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Component
 @Audited
@@ -263,24 +262,56 @@ public abstract class Polis implements Serializable, Cloneable {
         this.omschrijvingVerzekering = omschrijvingVerzekering;
     }
 
+    //    @Override
+    //    public boolean equals(Object o) {
+    //        if (this == o) {
+    //            return true;
+    //        }
+    //
+    //        if (!(o instanceof Polis)) {
+    //            return false;
+    //        }
+    //
+    //        Polis polis = (Polis) o;
+    //
+    //        return new EqualsBuilder().append(getId(), polis.getId()).append(getStatus(), polis.getStatus()).append(getPolisNummer(), polis.getPolisNummer()).append(getKenmerk(), polis.getKenmerk()).append(getIngangsDatum(), polis.getIngangsDatum()).append(getEindDatum(), polis.getEindDatum()).append(getPremie(), polis.getPremie()).append(getWijzigingsDatum(), polis.getWijzigingsDatum()).append(getProlongatieDatum(), polis.getProlongatieDatum()).append(getBetaalfrequentie(), polis.getBetaalfrequentie()).append(getDekking(), polis.getDekking()).append(getVerzekerdeZaak(), polis.getVerzekerdeZaak()).append(getRelatie(), polis.getRelatie()).append(getBedrijf(), polis.getBedrijf()).append(getMaatschappij(), polis.getMaatschappij()).append(getOmschrijvingVerzekering(), polis.getOmschrijvingVerzekering()).isEquals();
+    //    }
+    //
+    //    @Override
+    //    public int hashCode() {
+    //        return new HashCodeBuilder(17, 37).append(getId()).append(getStatus()).append(getPolisNummer()).append(getKenmerk()).append(getIngangsDatum()).append(getEindDatum()).append(getPremie()).append(getWijzigingsDatum()).append(getProlongatieDatum()).append(getBetaalfrequentie()).append(getDekking()).append(getVerzekerdeZaak()).append(getRelatie()).append(getBedrijf()).append(getMaatschappij()).append(getOmschrijvingVerzekering()).toHashCode();
+    //    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-
         if (!(o instanceof Polis)) {
             return false;
         }
-
         Polis polis = (Polis) o;
-
-        return new EqualsBuilder().append(getId(), polis.getId()).append(getStatus(), polis.getStatus()).append(getPolisNummer(), polis.getPolisNummer()).append(getKenmerk(), polis.getKenmerk()).append(getIngangsDatum(), polis.getIngangsDatum()).append(getEindDatum(), polis.getEindDatum()).append(getPremie(), polis.getPremie()).append(getWijzigingsDatum(), polis.getWijzigingsDatum()).append(getProlongatieDatum(), polis.getProlongatieDatum()).append(getBetaalfrequentie(), polis.getBetaalfrequentie()).append(getDekking(), polis.getDekking()).append(getVerzekerdeZaak(), polis.getVerzekerdeZaak()).append(getRelatie(), polis.getRelatie()).append(getBedrijf(), polis.getBedrijf()).append(getMaatschappij(), polis.getMaatschappij()).append(getOmschrijvingVerzekering(), polis.getOmschrijvingVerzekering()).isEquals();
+        return Objects.equals(getId(), polis.getId()) &&
+                getStatus() == polis.getStatus() &&
+                Objects.equals(getPolisNummer(), polis.getPolisNummer()) &&
+                Objects.equals(getKenmerk(), polis.getKenmerk()) &&
+                Objects.equals(getIngangsDatum(), polis.getIngangsDatum()) &&
+                Objects.equals(getEindDatum(), polis.getEindDatum()) &&
+                Objects.equals(getPremie(), polis.getPremie()) &&
+                Objects.equals(getWijzigingsDatum(), polis.getWijzigingsDatum()) &&
+                Objects.equals(getProlongatieDatum(), polis.getProlongatieDatum()) &&
+                getBetaalfrequentie() == polis.getBetaalfrequentie() &&
+                Objects.equals(getDekking(), polis.getDekking()) &&
+                Objects.equals(getVerzekerdeZaak(), polis.getVerzekerdeZaak()) &&
+                Objects.equals(getRelatie(), polis.getRelatie()) &&
+                Objects.equals(getBedrijf(), polis.getBedrijf()) &&
+                Objects.equals(getMaatschappij(), polis.getMaatschappij()) &&
+                Objects.equals(getOmschrijvingVerzekering(), polis.getOmschrijvingVerzekering());
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(getId()).append(getStatus()).append(getPolisNummer()).append(getKenmerk()).append(getIngangsDatum()).append(getEindDatum()).append(getPremie()).append(getWijzigingsDatum()).append(getProlongatieDatum()).append(getBetaalfrequentie()).append(getDekking()).append(getVerzekerdeZaak()).append(getRelatie()).append(getBedrijf()).append(getMaatschappij()).append(getOmschrijvingVerzekering()).toHashCode();
+        return Objects.hash(getId(), getStatus(), getPolisNummer(), getKenmerk(), getIngangsDatum(), getEindDatum(), getPremie(), getWijzigingsDatum(), getProlongatieDatum(), getBetaalfrequentie(), getDekking(), getVerzekerdeZaak(), getRelatie(), getBedrijf(), getMaatschappij(), getOmschrijvingVerzekering());
     }
 
     @Override

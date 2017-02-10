@@ -1,7 +1,5 @@
 package nl.lakedigital.djfc.domain;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.envers.Audited;
 import org.joda.time.LocalDate;
@@ -10,6 +8,7 @@ import org.joda.time.LocalDateTime;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Audited
 @Entity
@@ -174,32 +173,61 @@ public class Schade implements Serializable {
         this.omschrijving = omschrijving;
     }
 
+    //    @Override
+    //    public boolean equals(Object o) {
+    //        if (this == o) {
+    //            return true;
+    //        }
+    //
+    //        if (!(o instanceof Schade)) {
+    //            return false;
+    //        }
+    //
+    //        Schade schade = (Schade) o;
+    //
+    //        LocalDateTime datumTijdSchade1 =
+    //
+    //                getDatumTijdSchade();
+    //        LocalDateTime datumTijdSchade2 = schade.getDatumTijdSchade();
+    //        LocalDateTime datumTijdMelding1 = getDatumTijdMelding();
+    //        LocalDateTime datumTijdMelding2 = schade.getDatumTijdMelding();
+    //        LocalDate datumAfgehandeld1 = getDatumAfgehandeld();
+    //        LocalDate datumAfgehandeld2 = schade.getDatumAfgehandeld();
+    //        return new EqualsBuilder().append(getId(), schade.getId()).append(getPolis(), schade.getPolis()).append(getSchadeNummerMaatschappij(), schade.getSchadeNummerMaatschappij()).append(getSchadeNummerTussenPersoon(), schade.getSchadeNummerTussenPersoon()).append(getSoortSchade(), schade.getSoortSchade()).append(getSoortSchadeOngedefinieerd(), schade.getSoortSchadeOngedefinieerd()).append(getLocatie(), schade.getLocatie()).append(getStatusSchade(), schade.getStatusSchade()).append(datumTijdSchade1, datumTijdSchade2).append(datumTijdMelding1, datumTijdMelding2).append(datumAfgehandeld1, datumAfgehandeld2).append(getEigenRisico(), schade.getEigenRisico()).append(getOmschrijving(), schade.getOmschrijving()).isEquals();
+    //    }
+    //
+    //    @Override
+    //    public int hashCode() {
+    //        return new HashCodeBuilder(17, 37).append(getId()).append(getPolis()).append(getSchadeNummerMaatschappij()).append(getSchadeNummerTussenPersoon()).append(getSoortSchade()).append(getSoortSchadeOngedefinieerd()).append(getLocatie()).append(getStatusSchade()).append(getDatumTijdSchade()).append(getDatumTijdMelding()).append(getDatumAfgehandeld()).append(getEigenRisico()).append(getOmschrijving()).toHashCode();
+    //    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-
         if (!(o instanceof Schade)) {
             return false;
         }
-
         Schade schade = (Schade) o;
-
-        LocalDateTime datumTijdSchade1 =
-
-                getDatumTijdSchade();
-        LocalDateTime datumTijdSchade2 = schade.getDatumTijdSchade();
-        LocalDateTime datumTijdMelding1 = getDatumTijdMelding();
-        LocalDateTime datumTijdMelding2 = schade.getDatumTijdMelding();
-        LocalDate datumAfgehandeld1 = getDatumAfgehandeld();
-        LocalDate datumAfgehandeld2 = schade.getDatumAfgehandeld();
-        return new EqualsBuilder().append(getId(), schade.getId()).append(getPolis(), schade.getPolis()).append(getSchadeNummerMaatschappij(), schade.getSchadeNummerMaatschappij()).append(getSchadeNummerTussenPersoon(), schade.getSchadeNummerTussenPersoon()).append(getSoortSchade(), schade.getSoortSchade()).append(getSoortSchadeOngedefinieerd(), schade.getSoortSchadeOngedefinieerd()).append(getLocatie(), schade.getLocatie()).append(getStatusSchade(), schade.getStatusSchade()).append(datumTijdSchade1, datumTijdSchade2).append(datumTijdMelding1, datumTijdMelding2).append(datumAfgehandeld1, datumAfgehandeld2).append(getEigenRisico(), schade.getEigenRisico()).append(getOmschrijving(), schade.getOmschrijving()).isEquals();
+        return Objects.equals(getId(), schade.getId()) &&
+                Objects.equals(getPolis(), schade.getPolis()) &&
+                Objects.equals(getSchadeNummerMaatschappij(), schade.getSchadeNummerMaatschappij()) &&
+                Objects.equals(getSchadeNummerTussenPersoon(), schade.getSchadeNummerTussenPersoon()) &&
+                Objects.equals(getSoortSchade(), schade.getSoortSchade()) &&
+                Objects.equals(getSoortSchadeOngedefinieerd(), schade.getSoortSchadeOngedefinieerd()) &&
+                Objects.equals(getLocatie(), schade.getLocatie()) &&
+                Objects.equals(getStatusSchade(), schade.getStatusSchade()) &&
+                Objects.equals(getDatumTijdSchade(), schade.getDatumTijdSchade()) &&
+                Objects.equals(getDatumTijdMelding(), schade.getDatumTijdMelding()) &&
+                Objects.equals(getDatumAfgehandeld(), schade.getDatumAfgehandeld()) &&
+                Objects.equals(getEigenRisico(), schade.getEigenRisico()) &&
+                Objects.equals(getOmschrijving(), schade.getOmschrijving());
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(getId()).append(getPolis()).append(getSchadeNummerMaatschappij()).append(getSchadeNummerTussenPersoon()).append(getSoortSchade()).append(getSoortSchadeOngedefinieerd()).append(getLocatie()).append(getStatusSchade()).append(getDatumTijdSchade()).append(getDatumTijdMelding()).append(getDatumAfgehandeld()).append(getEigenRisico()).append(getOmschrijving()).toHashCode();
+        return Objects.hash(getId(), getPolis(), getSchadeNummerMaatschappij(), getSchadeNummerTussenPersoon(), getSoortSchade(), getSoortSchadeOngedefinieerd(), getLocatie(), getStatusSchade(), getDatumTijdSchade(), getDatumTijdMelding(), getDatumAfgehandeld(), getEigenRisico(), getOmschrijving());
     }
 
     @Override
