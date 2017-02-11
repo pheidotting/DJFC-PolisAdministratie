@@ -106,7 +106,7 @@ public class SchadeTest {
             schadeClient.lees(jsonSchade.getId().toString());
             fail("Error verwacht");
         } catch (RuntimeException nre) {
-            LOGGER.error(nre);
+            LOGGER.error("{}", nre);
         }
 
         schadeRepository.verwijderStatusSchade(newArrayList(statusSchade));
