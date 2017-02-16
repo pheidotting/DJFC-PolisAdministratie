@@ -153,4 +153,10 @@
             <column name="next_val">1</column>
         </insert>
     </changeSet>
+
+    <changeSet id="4" author="Patrick Heidotting">
+        <addColumn tableName="REVINFO">
+            <column name="TRACKANDTRACEID" type="varchar(36)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

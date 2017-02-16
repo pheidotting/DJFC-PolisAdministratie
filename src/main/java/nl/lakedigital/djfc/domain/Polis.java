@@ -79,6 +79,17 @@ public abstract class Polis implements Serializable, Cloneable {
     @Column(name = "OMSCHRIJVING", columnDefinition = "varchar(2500)")
     private String omschrijvingVerzekering;
 
+    @Transient
+    private String identificatie;
+
+    public String getIdentificatie() {
+        return identificatie;
+    }
+
+    public void setIdentificatie(String identificatie) {
+        this.identificatie = identificatie;
+    }
+
     public abstract SoortVerzekering getSoortVerzekering();
 
     public abstract String getSchermNaam();

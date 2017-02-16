@@ -50,6 +50,10 @@ public class SchadeService {
         schadeRepository.opslaan(schade);
     }
 
+    public void opslaan(List<Schade> schades) {
+        schadeRepository.opslaan(schades);
+    }
+
     public void opslaan(Schade schadeIn, String soortSchade, String polisId, String statusSchade) {
         LOGGER.debug("Opslaan schade");
         LOGGER.debug("{}", schadeIn);

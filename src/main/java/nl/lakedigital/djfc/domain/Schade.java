@@ -64,6 +64,9 @@ public class Schade implements Serializable {
     @Column(length = 1000, name = "OMSCHRIJVING")
     private String omschrijving;
 
+    @Transient
+    private String identificatie;
+
     public Long getId() {
         return id;
     }
@@ -171,6 +174,14 @@ public class Schade implements Serializable {
 
     public void setOmschrijving(String omschrijving) {
         this.omschrijving = omschrijving;
+    }
+
+    public String getIdentificatie() {
+        return identificatie;
+    }
+
+    public void setIdentificatie(String identificatie) {
+        this.identificatie = identificatie;
     }
 
     @Override

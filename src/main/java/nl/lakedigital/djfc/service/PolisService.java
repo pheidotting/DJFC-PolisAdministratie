@@ -1,6 +1,5 @@
 package nl.lakedigital.djfc.service;
 
-import com.google.common.collect.Lists;
 import nl.lakedigital.djfc.domain.Polis;
 import nl.lakedigital.djfc.domain.SoortEntiteit;
 import nl.lakedigital.djfc.domain.SoortVerzekering;
@@ -19,6 +18,7 @@ import java.util.List;
 
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.transform;
+import static com.google.common.collect.Lists.newArrayList;
 
 @Service
 public class PolisService {
@@ -34,7 +34,7 @@ public class PolisService {
 
         Iterable<String> polisString = transform(poli, new PolisToSchermNaamTransformer());
 
-        return Lists.newArrayList(polisString);
+        return newArrayList(polisString);
     }
 
     public List<Polis> alles(SoortEntiteit soortEntiteit, Long entiteitId) {
@@ -54,6 +54,10 @@ public class PolisService {
         polisRepository.opslaan(polis);
 
         LOGGER.debug("{}", lees(polis.getId()));
+    }
+
+    public void opslaan(List<Polis> polissen) {
+        polisRepository.opslaan(polissen);
     }
 
     public Polis lees(Long id) {
@@ -80,5 +84,15 @@ public class PolisService {
         LOGGER.debug("Polis gevonden : " + polis);
 
         polisRepository.verwijder(polis);
+    }
+
+    public void verwijder(List<Long> ids) {
+        LOGGER.debug("Ophalen Polis");
+        List<Polis> polissen = newArrayList();
+        for (Long id : ids) {
+            polissen.add(polisRepository.lees(id));
+        }
+
+        polisRepository.verwijder(polissen);
     }
 }

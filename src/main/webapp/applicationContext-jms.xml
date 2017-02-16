@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jms="http://www.springframework.org/schema/jms"
        xmlns:p="http://www.springframework.org/schema/p"
-
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms-3.0.xsd">
 
     <!-- Activemq connection factory -->
     <bean id="amqConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory"
@@ -15,20 +15,38 @@
         <constructor-arg ref="amqConnectionFactory"/>
     </bean>
 
-    <!-- Aanmaken Taak -->
-    <!-- Default Destination Queue Definition -->
-    <bean id="afspraakVastgelegdDestination" class="org.apache.activemq.command.ActiveMQTopic">
-        <constructor-arg index="0" value="afspraakVastgelegdQueue"/>
-    </bean>
-    <!-- aanmakenTaakTemplate Definition -->
-    <bean id="afspraakVastgelegdTemplate" class="org.springframework.jms.core.JmsTemplate">
-        <property name="connectionFactory" ref="connectionFactory"/>
-        <property name="defaultDestination" ref="afspraakVastgelegdDestination"/>
-    </bean>
+    <!-- Polis Opslaan -->
+    <bean id="polisOpslaanRequestReciever" class="nl.lakedigital.djfc.messaging.reciever.PolisOpslaanRequestReciever"/>
+    <jms:listener-container container-type="default" connection-factory="connectionFactory" acknowledge="auto">
+        <jms:listener destination="rb.pa.polisOpslaanRequestQueue" ref="polisOpslaanRequestReciever"
+                      method="onMessage"/>
+    </jms:listener-container>
 
-    <!-- Message Sender Definition -->
-    <bean id="afspraakVastgelegdSender" class="nl.barbero.messaging.sender.AfspraakVastgelegdSender">
-        <constructor-arg index="0" ref="afspraakVastgelegdTemplate"/>
-    </bean>
-    <!-- /Aanmaken Taak -->
+    <bean id="schadeOpslaanRequestReciever"
+          class="nl.lakedigital.djfc.messaging.reciever.SchadeOpslaanRequestReciever"/>
+    <jms:listener-container container-type="default" connection-factory="connectionFactory" acknowledge="auto">
+        <jms:listener destination="rb.pa.schadeOpslaanRequestQueue" ref="schadeOpslaanRequestReciever"
+                      method="onMessage"/>
+    </jms:listener-container>
+    <!--<bean id="polisOpslaanResponseDestination" class="org.apache.activemq.command.ActiveMQQueue">-->
+    <!--<constructor-arg index="0" value="rb.pa.polisOpslaanResponseQueue"/>-->
+    <!--</bean>-->
+    <!--<bean id="polisOpslaanResponseTemplate" class="org.springframework.jms.core.JmsTemplate">-->
+    <!--<property name="connectionFactory" ref="connectionFactory"/>-->
+    <!--<property name="defaultDestination" ref="polisOpslaanResponseDestination"/>-->
+    <!--</bean>-->
+    <!--<bean id="polisOpslaanResponseSender" class="nl.dias.messaging.sender.PolisOpslaanResponseSender">-->
+    <!--<constructor-arg index="0" ref="polisOpslaanResponseTemplate"/>-->
+    <!--</bean>-->
+
+    <!-- //  Polis Opslaan -->
+
+    <!-- Polis Verwijderen -->
+    <bean id="polisVerwijderenRequestReciever"
+          class="nl.lakedigital.djfc.messaging.reciever.PolisVerwijderenRequestReciever"/>
+    <jms:listener-container container-type="default" connection-factory="connectionFactory" acknowledge="auto">
+        <jms:listener destination="rb.pa.polisVerwijderenRequestQueue" ref="polisVerwijderenRequestReciever"
+                      method="onMessage"/>
+    </jms:listener-container>
+    <!-- //  Polis Verwijderen -->
 </beans>
