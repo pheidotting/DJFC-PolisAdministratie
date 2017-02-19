@@ -12,22 +12,23 @@ import org.springframework.stereotype.Component;
 public class SchadeNaarJsonSchadeMapper extends AbstractMapper<Schade, JsonSchade> implements JsonMapper {
     private final static Logger LOGGER = LoggerFactory.getLogger(SchadeNaarJsonSchadeMapper.class);
 
-    String patternDatumTijd = "yyyy-MM-dd HH:mm";
-    String patternDatum = "yyyy-MM-dd";
+    String patternDatumTijd = "dd-MM-yyyy HH:mm";
+    String patternDatum = "dd-MM-yyyy";
 
     @Override
     public JsonSchade map(Schade schade, Object parent, Object bestaandObject) {
         JsonSchade jsonSchade = new JsonSchade();
 
-        LOGGER.debug("DatumAfgehandeld {}", jsonSchade.getDatumAfgehandeld());
-        LOGGER.debug("DatumAfgehandeld {}", schade.getDatumAfgehandeld());
+        jsonSchade.setPolis(String.valueOf(schade.getPolis()));
         if (schade.getDatumAfgehandeld() != null) {
-            LOGGER.debug("sadfowejfojwejfjoewjfoijwaeojfaijwoijawejfjweafijwaoiejfojwaeoijf");
             jsonSchade.setDatumAfgehandeld(schade.getDatumAfgehandeld().toString(patternDatum));
         }
-        LOGGER.debug("DatumAfgehandeld {}", jsonSchade.getDatumAfgehandeld());
-        jsonSchade.setDatumTijdMelding(schade.getDatumTijdMelding().toString(patternDatumTijd));
-        jsonSchade.setDatumTijdSchade(schade.getDatumTijdSchade().toString(patternDatumTijd));
+        if (schade.getDatumAfgehandeld() != null) {
+            jsonSchade.setDatumTijdMelding(schade.getDatumTijdMelding().toString(patternDatumTijd));
+        }
+        if (schade.getDatumTijdSchade() != null) {
+            jsonSchade.setDatumTijdSchade(schade.getDatumTijdSchade().toString(patternDatumTijd));
+        }
         if (schade.getEigenRisico() != null) {
             jsonSchade.setEigenRisico(schade.getEigenRisico().getBedrag().toString());
         }

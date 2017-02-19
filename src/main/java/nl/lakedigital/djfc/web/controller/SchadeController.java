@@ -2,6 +2,9 @@ package nl.lakedigital.djfc.web.controller;
 
 import nl.lakedigital.djfc.commons.json.JsonSchade;
 import nl.lakedigital.djfc.commons.json.JsonSoortSchade;
+import nl.lakedigital.djfc.commons.xml.OpvragenSchadesResponse;
+import nl.lakedigital.djfc.commons.xml.OpvragenSoortSchadeResponse;
+import nl.lakedigital.djfc.commons.xml.OpvragenStatusSchadeResponse;
 import nl.lakedigital.djfc.domain.Schade;
 import nl.lakedigital.djfc.domain.SoortEntiteit;
 import nl.lakedigital.djfc.domain.SoortSchade;
@@ -15,8 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
-import javax.ws.rs.QueryParam;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequestMapping("/schade")
@@ -40,47 +41,49 @@ public class SchadeController {
         return schade.getId();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/lijst")
+    @RequestMapping(method = RequestMethod.GET, value = "/lijst/{relatieId}")
     @ResponseBody
-    public List<JsonSchade> lijst(@QueryParam("relatieId") Long relatieId) {
+    public OpvragenSchadesResponse lijst(@PathVariable("relatieId") Long relatieId) {
         LOGGER.debug("Opzoeken Schades bij Relatie met Id {}", relatieId);
 
+        OpvragenSchadesResponse opvragenSchadesResponse = new OpvragenSchadesResponse();
+
         List<Schade> schades = schadeService.alles(SoortEntiteit.RELATIE, relatieId);
-        List<JsonSchade> result = new ArrayList<>();
 
         for (Schade schade : schades) {
-            result.add(mapper.map(schade, JsonSchade.class));
+            opvragenSchadesResponse.getSchades().add(mapper.map(schade, JsonSchade.class));
         }
 
-        return result;
+        return opvragenSchadesResponse;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/lijstBijBedrijf")
+    @RequestMapping(method = RequestMethod.GET, value = "/lijstBijBedrijf{bedrijfId}")
     @ResponseBody
-    public List<JsonSchade> lijstBijBedrijf(@QueryParam("bedrijfId") Long bedrijfId) {
+    public OpvragenSchadesResponse lijstBijBedrijf(@PathVariable("bedrijfId") Long bedrijfId) {
         LOGGER.debug("Opzoeken Schades bij Bedrijf met Id {}", bedrijfId);
 
-
+        OpvragenSchadesResponse opvragenSchadesResponse = new OpvragenSchadesResponse();
         List<Schade> schades = schadeService.alles(SoortEntiteit.SCHADE, bedrijfId);
-        List<JsonSchade> result = new ArrayList<>();
 
         for (Schade schade : schades) {
-            result.add(mapper.map(schade, JsonSchade.class));
+            opvragenSchadesResponse.getSchades().add(mapper.map(schade, JsonSchade.class));
         }
 
-        return result;
+        return opvragenSchadesResponse;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/lees/{id}")
     @ResponseBody
-    public JsonSchade lees(@PathVariable("id") String id) {
+    public OpvragenSchadesResponse lees(@PathVariable("id") String id) {
         Schade schade = schadeService.lees(Long.valueOf(id));
 
         if (schade == null) {
-            throw new ResourceNotFoundException();
+            schade = new Schade();
         }
 
-        return mapper.map(schade, JsonSchade.class);
+        OpvragenSchadesResponse opvragenSchadesResponse = new OpvragenSchadesResponse();
+        opvragenSchadesResponse.getSchades().add(mapper.map(schade, JsonSchade.class));
+        return opvragenSchadesResponse;
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
@@ -98,30 +101,29 @@ public class SchadeController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/soortenSchade")
+    @RequestMapping(method = RequestMethod.GET, value = "/soortenSchade{query}")
     @ResponseBody
-    public List<JsonSoortSchade> soortenSchade(@QueryParam("query") String query) {
+    public OpvragenSoortSchadeResponse soortenSchade(@PathVariable("query") String query) {
         List<SoortSchade> lijst = schadeService.soortenSchade(query);
-        List<JsonSoortSchade> result = new ArrayList<>();
 
+        OpvragenSoortSchadeResponse opvragenSoortSchadeResponse = new OpvragenSoortSchadeResponse();
         for (SoortSchade soortSchade : lijst) {
-            result.add(mapper.map(soortSchade, JsonSoortSchade.class));
+            opvragenSoortSchadeResponse.getSoortSchade().add(mapper.map(soortSchade, JsonSoortSchade.class));
         }
 
-        return result;
+        return opvragenSoortSchadeResponse;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/lijstStatusSchade")
     @ResponseBody
-    public List<String> lijstStatusSchade() {
+    public OpvragenStatusSchadeResponse lijstStatusSchade() {
         List<StatusSchade> lijst = schadeService.getStatussen();
 
-        List<String> ret = new ArrayList<String>();
-
+        OpvragenStatusSchadeResponse opvragenStatusSchadeResponse = new OpvragenStatusSchadeResponse();
         for (StatusSchade statusSchade : lijst) {
-            ret.add(statusSchade.getStatus());
+            opvragenStatusSchadeResponse.getStatusSchade().add(statusSchade.getStatus());
         }
 
-        return ret;
+        return opvragenStatusSchadeResponse;
     }
 }

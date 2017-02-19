@@ -2,16 +2,20 @@ package nl.lakedigital.djfc.web.controller;
 
 import com.google.common.collect.Lists;
 import nl.lakedigital.djfc.commons.json.JsonPolis;
+import nl.lakedigital.djfc.commons.xml.OpvragenPolisSoortenResponse;
+import nl.lakedigital.djfc.commons.xml.OpvragenPolissenResponse;
 import nl.lakedigital.djfc.domain.Polis;
 import nl.lakedigital.djfc.domain.SoortEntiteit;
 import nl.lakedigital.djfc.domain.SoortVerzekering;
 import nl.lakedigital.djfc.mapper.Mapper;
 import nl.lakedigital.djfc.service.PolisService;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -31,27 +35,37 @@ public class PolisController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/alleParticulierePolisSoorten")
     @ResponseBody
-    public List<String> alleParticulierePolisSoorten() {
-        return polisService.allePolisSoorten(SoortVerzekering.PARTICULIER);
+    public OpvragenPolisSoortenResponse alleParticulierePolisSoorten() {
+        OpvragenPolisSoortenResponse opvragenPolisSoortenResponse = new OpvragenPolisSoortenResponse();
+        opvragenPolisSoortenResponse.setPolisSoorten(polisService.allePolisSoorten(SoortVerzekering.PARTICULIER));
+
+        return opvragenPolisSoortenResponse;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/alleZakelijkePolisSoorten")
     @ResponseBody
-    public List<String> alleZakelijkePolisSoorten() {
-        return polisService.allePolisSoorten(SoortVerzekering.ZAKELIJK);
+    public OpvragenPolisSoortenResponse alleZakelijkePolisSoorten() {
+        OpvragenPolisSoortenResponse opvragenPolisSoortenResponse = new OpvragenPolisSoortenResponse();
+        opvragenPolisSoortenResponse.setPolisSoorten(polisService.allePolisSoorten(SoortVerzekering.ZAKELIJK));
+
+        return opvragenPolisSoortenResponse;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/lees/{id}")
     @ResponseBody
-    public JsonPolis lees(@PathVariable("id") String id) {
+    public OpvragenPolissenResponse lees(@PathVariable("id") String id) {
+        OpvragenPolissenResponse opvragenPolissenResponse = new OpvragenPolissenResponse();
+
         LOGGER.debug("ophalen Polis met id " + id);
         if (id != null && !"".equals(id) && !"0".equals(id)) {
             LOGGER.debug("ophalen Polis");
-            return mapper.map(polisService.lees(Long.valueOf(id)), JsonPolis.class);
+            opvragenPolissenResponse.getPolissen().add(mapper.map(polisService.lees(Long.valueOf(id)), JsonPolis.class));
         } else {
             LOGGER.debug("Nieuwe Polis tonen");
-            return new JsonPolis();
+            opvragenPolissenResponse.getPolissen().add(new JsonPolis());
         }
+
+        return opvragenPolissenResponse;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/beeindigen/{id}")
@@ -63,22 +77,23 @@ public class PolisController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/lijst/{relatieId}")
     @ResponseBody
-    public List<JsonPolis> lijst(@PathVariable("relatieId") String relatieId) {
+    public OpvragenPolissenResponse lijst(@PathVariable("relatieId") String relatieId) {
         LOGGER.debug("Ophalen alle polissen voor Relatie " + relatieId);
-        //        Relatie relatie = (Relatie) gebruikerService.lees(Long.valueOf(relatieId));
         Long relatie = Long.valueOf(relatieId);
 
-        List<JsonPolis> result = Lists.newArrayList();
+        List<JsonPolis> polissen = Lists.newArrayList();
         for (Polis polis : polisService.alles(SoortEntiteit.RELATIE, relatie)) {
-            result.add(mapper.map(polis, JsonPolis.class));
+            polissen.add(mapper.map(polis, JsonPolis.class));
         }
 
-        return result;
+        OpvragenPolissenResponse opvragenPolissenResponse = new OpvragenPolissenResponse();
+        opvragenPolissenResponse.setPolissen(polissen);
+        return opvragenPolissenResponse;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/lijstBijBedrijf/{bedrijfId}")
     @ResponseBody
-    public List<JsonPolis> lijstBijBedrijf(@PathVariable("bedrijfId") Long bedrijfId) {
+    public OpvragenPolissenResponse lijstBijBedrijf(@PathVariable("bedrijfId") Long bedrijfId) {
         LOGGER.debug("Ophalen alle polissen voor Bedrijf " + bedrijfId);
 
         List<JsonPolis> polissen = new ArrayList<>();
@@ -86,30 +101,18 @@ public class PolisController {
             polissen.add(mapper.map(polis, JsonPolis.class));
         }
 
-        return polissen;
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/opslaan")
-    @ResponseBody
-    public Long opslaan(@RequestBody JsonPolis jsonPolis) {
-        LOGGER.debug("Opslaan " + ReflectionToStringBuilder.toString(jsonPolis));
-
-        Polis polis = mapper.map(jsonPolis, Polis.class);
-        polisService.opslaan(polis);
-
-        return polis.getId();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/verwijder/{id}")
-    @ResponseBody
-    public void verwijder(@PathVariable("id") Long id) {
-        LOGGER.debug("verwijderen Polis met id " + id);
-        polisService.verwijder(id);
+        OpvragenPolissenResponse opvragenPolissenResponse = new OpvragenPolissenResponse();
+        opvragenPolissenResponse.setPolissen(polissen);
+        return opvragenPolissenResponse;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/zoekOpPolisNummer/{polisNummer}")
     @ResponseBody
-    public JsonPolis zoekOpPolisNummer(@PathVariable("polisNummer") String polisNummer) {
-        return mapper.map(polisService.zoekOpPolisNummer(polisNummer), JsonPolis.class);
+    public OpvragenPolissenResponse zoekOpPolisNummer(@PathVariable("polisNummer") String polisNummer) {
+        OpvragenPolissenResponse opvragenPolissenResponse = new OpvragenPolissenResponse();
+
+        opvragenPolissenResponse.getPolissen().add(mapper.map(polisService.zoekOpPolisNummer(polisNummer), JsonPolis.class));
+
+        return opvragenPolissenResponse;
     }
 }

@@ -132,7 +132,10 @@ public class Schade implements Serializable {
     }
 
     public LocalDateTime getDatumTijdSchade() {
-        return new LocalDateTime(datumTijdSchade);
+        if (datumTijdSchade != null) {
+            return new LocalDateTime(datumTijdSchade);
+        }
+        return null;
     }
 
     public void setDatumTijdSchade(LocalDateTime datumTijdSchade) {
@@ -149,9 +152,7 @@ public class Schade implements Serializable {
 
     public LocalDate getDatumAfgehandeld() {
         if (datumAfgehandeld != null) {
-            return
-
-                    new LocalDate(datumAfgehandeld);
+            return new LocalDate(datumAfgehandeld);
         }
         return null;
     }
