@@ -86,6 +86,18 @@ public class PolisRepository {
         return t;
     }
 
+    public List<Polis> alles() {
+        getTransaction().begin();
+
+        Query query = getSession().createQuery("select p from Polis p");
+
+        List<Polis> polis = query.list();
+
+        getTransaction().commit();
+
+        return polis;
+    }
+
     public Polis zoekOpPolisNummer(String PolisNummer) {
         getTransaction().begin();
 

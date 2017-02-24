@@ -65,6 +65,18 @@ public class SchadeRepository {
         return result;
     }
 
+    public List<Schade> alles() {
+        getTransaction().begin();
+
+        Query query = getSession().createQuery("select p from Schade p");
+
+        List<Schade> polis = query.list();
+
+        getTransaction().commit();
+
+        return polis;
+    }
+
     public void opslaan(StatusSchade statusSchade) {
         getTransaction().begin();
 

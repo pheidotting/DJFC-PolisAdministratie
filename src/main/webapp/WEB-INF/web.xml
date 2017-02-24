@@ -29,7 +29,7 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<!--<listener>-->
-		<!--<listener-class>nl.lakedigital.servlet.StartupServlet</listener-class>-->
-	<!--</listener>-->
+	<listener>
+		<listener-class>nl.lakedigital.djfc.web.servlet.AanmeldenEntiteitenBijIdentificatieServlet</listener-class>
+	</listener>
 </web-app>
