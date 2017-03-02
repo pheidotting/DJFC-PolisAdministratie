@@ -65,7 +65,7 @@ public class PolisService {
     }
 
 
-    public Polis zoekOpPolisNummer(String polisNummer) {
+    public List<Polis> zoekOpPolisNummer(String polisNummer) {
         try {
             return polisRepository.zoekOpPolisNummer(polisNummer);
         } catch (NoResultException e) {

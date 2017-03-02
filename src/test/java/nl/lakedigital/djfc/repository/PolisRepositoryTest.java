@@ -20,6 +20,7 @@ import java.util.List;
 
 import static com.google.common.collect.Iterables.filter;
 import static com.google.common.collect.Iterables.getFirst;
+import static com.google.common.collect.Lists.newArrayList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -125,8 +126,8 @@ assertThat(opgehaald.getBetaalfrequentie(),is(autoVerzekering.getBetaalfrequenti
 
         polisRepository.opslaan(polissen);
 
-        assertThat(polisRepository.zoekOpPolisNummer("a"), is(autoVerzekering));
-        assertThat(polisRepository.zoekOpPolisNummer("b"), is(geldVerzekering));
+        assertThat(polisRepository.zoekOpPolisNummer("a"), is(newArrayList(autoVerzekering)));
+        assertThat(polisRepository.zoekOpPolisNummer("b"), is(newArrayList(geldVerzekering)));
 
         polisRepository.verwijder(polissen);
     }

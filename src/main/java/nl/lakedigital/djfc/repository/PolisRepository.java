@@ -45,7 +45,7 @@ public class PolisRepository {
     }
 
     public void verwijder(List<Polis> polissen) {
-            getTransaction().begin();
+        getTransaction().begin();
 
         for (Polis polis : polissen) {
             getSession().delete(polis);
@@ -55,13 +55,14 @@ public class PolisRepository {
     }
 
     public void opslaan(Polis polis) {
-        List<Polis> polissen=new ArrayList();
+        List<Polis> polissen = new ArrayList();
         polissen.add(polis);
 
         opslaan(polissen);
     }
+
     public void opslaan(List<Polis> polissen) {
-            getTransaction().begin();
+        getTransaction().begin();
 
         for (Polis t : polissen) {
             LOGGER.info("Opslaan {}", ReflectionToStringBuilder.toString(t, ToStringStyle.SHORT_PREFIX_STYLE));
@@ -98,27 +99,27 @@ public class PolisRepository {
         return polis;
     }
 
-    public Polis zoekOpPolisNummer(String PolisNummer) {
+    public List<Polis> zoekOpPolisNummer(String PolisNummer) {
         getTransaction().begin();
 
         Query query = getSession().getNamedQuery("Polis.zoekOpPolisNummer");
         query.setParameter("polisNummer", PolisNummer);
 
-        Polis polis = (Polis) query.uniqueResult();
+        List<Polis> result = query.list();
 
         getTransaction().commit();
 
-        return polis;
+        return result;
     }
 
     public List<Polis> alles(SoortEntiteit soortEntiteit, Long entiteitId) {
         getTransaction().begin();
 
-        String queryString= null;
-        if(soortEntiteit==SoortEntiteit.RELATIE){
-            queryString="select p from Polis p where relatie = "+entiteitId;
-        }else if(soortEntiteit==SoortEntiteit.BEDRIJF){
-            queryString="select p from Polis p where bedrijf = "+entiteitId;
+        String queryString = null;
+        if (soortEntiteit == SoortEntiteit.RELATIE) {
+            queryString = "select p from Polis p where relatie = " + entiteitId;
+        } else if (soortEntiteit == SoortEntiteit.BEDRIJF) {
+            queryString = "select p from Polis p where bedrijf = " + entiteitId;
         }
 
         Query query = getSession().createQuery(queryString);

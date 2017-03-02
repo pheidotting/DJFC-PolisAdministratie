@@ -37,7 +37,7 @@ public class SchadeService {
         return schadeRepository.getStatussen();
     }
 
-    public Schade zoekOpSchadeNummerMaatschappij(String schadeNummer) {
+    public List<Schade> zoekOpSchadeNummerMaatschappij(String schadeNummer) {
         return schadeRepository.zoekOpSchadeNummerMaatschappij(schadeNummer);
     }
 

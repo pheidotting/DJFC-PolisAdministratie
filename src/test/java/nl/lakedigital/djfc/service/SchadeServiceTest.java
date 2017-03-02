@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
 import static org.hamcrest.CoreMatchers.is;
@@ -101,11 +102,11 @@ public class SchadeServiceTest extends EasyMockSupport {
         Schade schade = new Schade();
         String zoek = "abc";
 
-        expect(schadeRepository.zoekOpSchadeNummerMaatschappij(zoek)).andReturn(schade);
+        expect(schadeRepository.zoekOpSchadeNummerMaatschappij(zoek)).andReturn(newArrayList(schade));
 
         replayAll();
 
-        assertThat(service.zoekOpSchadeNummerMaatschappij(zoek), is(schade));
+        assertThat(service.zoekOpSchadeNummerMaatschappij(zoek), is(newArrayList(schade)));
 
         verifyAll();
     }

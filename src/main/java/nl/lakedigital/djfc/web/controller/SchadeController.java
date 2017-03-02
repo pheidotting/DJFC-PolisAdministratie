@@ -72,6 +72,21 @@ public class SchadeController {
         return opvragenSchadesResponse;
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/zoekOpSchadeNummerMaatschappij/{schadeNummerMaatschappij}")
+    @ResponseBody
+    public OpvragenSchadesResponse zoekOpSchadeNummerMaatschappij(@PathVariable("schadeNummerMaatschappij") String schadeNummerMaatschappij) {
+        LOGGER.debug("Opzoeken Schades met schadeNummerMaatschappij {}", schadeNummerMaatschappij);
+
+        OpvragenSchadesResponse opvragenSchadesResponse = new OpvragenSchadesResponse();
+        List<Schade> schades = schadeService.zoekOpSchadeNummerMaatschappij(schadeNummerMaatschappij);
+
+        for (Schade schade : schades) {
+            opvragenSchadesResponse.getSchades().add(mapper.map(schade, JsonSchade.class));
+        }
+
+        return opvragenSchadesResponse;
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/lees/{id}")
     @ResponseBody
     public OpvragenSchadesResponse lees(@PathVariable("id") String id) {

@@ -149,13 +149,13 @@ public class SchadeRepository {
         return result;
     }
 
-    public Schade zoekOpSchadeNummerMaatschappij(String schadeNummerMaatschappij) {
+    public List<Schade> zoekOpSchadeNummerMaatschappij(String schadeNummerMaatschappij) {
         getTransaction().begin();
 
         Query query = getSession().getNamedQuery("Schade.zoekOpschadeNummerMaatschappij");
         query.setParameter("schadeNummerMaatschappij", schadeNummerMaatschappij);
 
-        Schade result = (Schade) query.uniqueResult();
+        List<Schade> result = query.list();
 
         getTransaction().commit();
 

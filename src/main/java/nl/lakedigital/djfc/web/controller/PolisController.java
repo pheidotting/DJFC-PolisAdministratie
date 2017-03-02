@@ -111,8 +111,9 @@ public class PolisController {
     public OpvragenPolissenResponse zoekOpPolisNummer(@PathVariable("polisNummer") String polisNummer) {
         OpvragenPolissenResponse opvragenPolissenResponse = new OpvragenPolissenResponse();
 
-        opvragenPolissenResponse.getPolissen().add(mapper.map(polisService.zoekOpPolisNummer(polisNummer), JsonPolis.class));
-
+        for (Polis polis : polisService.zoekOpPolisNummer(polisNummer)) {
+            opvragenPolissenResponse.getPolissen().add(mapper.map(polis, JsonPolis.class));
+        }
         return opvragenPolissenResponse;
     }
 }

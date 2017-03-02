@@ -21,6 +21,7 @@ import javax.persistence.NoResultException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.easymock.EasyMock.expect;
 import static org.easymock.EasyMock.expectLastCall;
 import static org.hamcrest.CoreMatchers.is;
@@ -83,11 +84,11 @@ public class PolisServiceTest extends EasyMockSupport {
     public void testZoekOpPolisNummer() {
         CamperVerzekering camperVerzekering = new CamperVerzekering(soortEntiteit, entiteitId);
 
-        expect(polisRepository.zoekOpPolisNummer("1234")).andReturn(camperVerzekering);
+        expect(polisRepository.zoekOpPolisNummer("1234")).andReturn(newArrayList(camperVerzekering));
 
         replayAll();
 
-        assertEquals(camperVerzekering, polisService.zoekOpPolisNummer("1234"));
+        assertThat(polisService.zoekOpPolisNummer("1234"), is(newArrayList(camperVerzekering)));
     }
 
     @Test
