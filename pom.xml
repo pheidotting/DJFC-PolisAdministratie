@@ -67,7 +67,7 @@
         <dependency>
             <groupId>nl.lakedigital.djfc</groupId>
             <artifactId>djfc-clients</artifactId>
-            <version>5.27</version>
+            <version>5.28</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -363,6 +363,16 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <includes>
+                        <include>nl.lakedigital.*</include>
+                    </includes>
+                </configuration>
             </plugin>
         </plugins>
         <finalName>pa</finalName>
