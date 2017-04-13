@@ -55,11 +55,11 @@ public class PolisRepositoryTest {
         for (final Polis p : polissen) {
             AuditReader reader = AuditReaderFactory.get(polisRepository.getSession());
 
-            polisRepository.getTransaction().begin();
+            polisRepository.getSession().getTransaction().begin();
 
             Polis auditedPolis = reader.find(Polis.class, p.getId(), 1);
 
-            polisRepository.getTransaction().commit();
+            polisRepository.getSession().getTransaction().commit();
 
             assertThat(auditedPolis, is(p));
 

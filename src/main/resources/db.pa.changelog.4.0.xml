@@ -16,7 +16,7 @@
 
     <changeSet id="2" author="Patrick Heidotting">
         <createTable tableName="POLIS">
-            <column name="ID" type="int" autoIncrement="true">
+            <column name="ID" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="SOORT" type="varchar(2)" />
@@ -31,17 +31,17 @@
             <column name="PROLONGATIEDATUM" type="date" />
             <column name="BEDRIJF" type="bigint(20)" />
             <column name="MAATSCHAPPIJ" type="bigint(20)" />
-            <column name="OMSCHRIJVING" type="text" />
+            <column name="OMSCHRIJVING" type="varchar(2500)"/>
             <column name="RELATIE" type="bigint(20)" />
             <column name="DEKKING" type="varchar(250)" />
             <column name="VERZEKERDEZAAK" type="varchar(250)" />
         </createTable>
         <createTable tableName="POLIS_AUD">
-            <column name="ID" type="int">
+            <column name="ID" type="BIGINT">
                 <constraints nullable="false" />
             </column>
             <column name="REV" type="int" />
-            <column name="REVTYPE" type="int" />
+            <column name="REVTYPE" type="tinyint"/>
             <column name="SOORT" type="varchar(2)" />
             <column name="STATUS" type="varchar(3)" />
             <column name="BETAALFREQUENTIE" type="varchar(1)" />
@@ -54,13 +54,13 @@
             <column name="PROLONGATIEDATUM" type="date" />
             <column name="BEDRIJF" type="bigint(20)" />
             <column name="MAATSCHAPPIJ" type="bigint(20)" />
-            <column name="OMSCHRIJVING" type="text" />
+            <column name="OMSCHRIJVING" type="varchar(2500)"/>
             <column name="RELATIE" type="bigint(20)" />
             <column name="DEKKING" type="varchar(250)" />
             <column name="VERZEKERDEZAAK" type="varchar(250)" />
         </createTable>
         <createTable tableName="SCHADE">
-            <column name="ID" type="int" autoIncrement="true">
+            <column name="ID" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="DATUMAFGEHANDELD" type="date" />
@@ -68,7 +68,7 @@
             <column name="DATUMTIJD" type="datetime" />
             <column name="EIGENRISICO" type="double" />
             <column name="LOCATIE" type="varchar(50)" />
-            <column name="OMSCHRIJVING" type="longtext" />
+            <column name="OMSCHRIJVING" type="varchar(2500)"/>
             <column name="SCHADENUMMERMAATSCHAPPIJ" type="varchar(25)" />
             <column name="SCHADENUMMERTUSSENPERSOON" type="varchar(25)" />
             <column name="POLIS" type="bigint(20)" />
@@ -77,17 +77,17 @@
             <column name="STATUS" type="bigint(20)" />
         </createTable>
         <createTable tableName="SCHADE_AUD">
-            <column name="ID" type="int">
+            <column name="ID" type="BIGINT">
                 <constraints nullable="false" />
             </column>
             <column name="REV" type="int" />
-            <column name="REVTYPE" type="int" />
+            <column name="REVTYPE" type="tinyint"/>
             <column name="DATUMAFGEHANDELD" type="date" />
             <column name="DATUMTIJDMELDING" type="datetime" />
             <column name="DATUMTIJD" type="datetime" />
             <column name="EIGENRISICO" type="double" />
             <column name="LOCATIE" type="varchar(50)" />
-            <column name="OMSCHRIJVING" type="longtext" />
+            <column name="OMSCHRIJVING" type="varchar(2500)"/>
             <column name="SCHADENUMMERMAATSCHAPPIJ" type="varchar(25)" />
             <column name="SCHADENUMMERTUSSENPERSOON" type="varchar(25)" />
             <column name="POLIS" type="bigint(20)" />
@@ -96,50 +96,50 @@
             <column name="STATUS" type="bigint(20)" />
         </createTable>
         <createTable tableName="SOORTSCHADE">
-            <column name="ID" type="int" autoIncrement="true">
+            <column name="ID" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="INGEBRUIK" type="tinyint(1)" />
             <column name="OMSCHRIJVING" type="varchar(250)" />
         </createTable>
         <createTable tableName="SOORTSCHADE_AUD">
-            <column name="ID" type="int">
+            <column name="ID" type="BIGINT">
                 <constraints nullable="false" />
             </column>
             <column name="REV" type="int" />
-            <column name="REVTYPE" type="int" />
+            <column name="REVTYPE" type="tinyint"/>
             <column name="INGEBRUIK" type="tinyint(1)" />
             <column name="OMSCHRIJVING" type="varchar(250)" />
         </createTable>
         <createTable tableName="STATUSSCHADE">
-            <column name="ID" type="int" autoIncrement="true">
+            <column name="ID" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="INGEBRUIK" type="tinyint(1)" />
             <column name="STATUS" type="varchar(250)" />
         </createTable>
         <createTable tableName="STATUSSCHADE_AUD">
-            <column name="ID" type="int">
+            <column name="ID" type="BIGINT">
                 <constraints nullable="false" />
             </column>
             <column name="REV" type="int" />
-            <column name="REVTYPE" type="int" />
+            <column name="REVTYPE" type="tinyint"/>
             <column name="INGEBRUIK" type="tinyint(1)" />
             <column name="STATUS" type="varchar(250)" />
         </createTable>
         <createTable tableName="VERZEKERINGSMAATSCHAPPIJ">
-            <column name="ID" type="int" autoIncrement="true">
+            <column name="ID" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false" />
             </column>
             <column name="NAAM" type="varchar(255)" />
             <column name="TONEN" type="tinyint(1)" />
         </createTable>
         <createTable tableName="VERZEKERINGSMAATSCHAPPIJ_AUD">
-            <column name="ID" type="int">
+            <column name="ID" type="BIGINT">
                 <constraints nullable="false" />
             </column>
             <column name="REV" type="int" />
-            <column name="REVTYPE" type="int" />
+            <column name="REVTYPE" type="tinyint"/>
             <column name="NAAM" type="varchar(255)" />
             <column name="TONEN" type="tinyint(1)" />
         </createTable>

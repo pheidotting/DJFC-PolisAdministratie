@@ -4,15 +4,15 @@ import nl.lakedigital.djfc.domain.Polis;
 import nl.lakedigital.djfc.domain.SoortEntiteit;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +25,15 @@ public class PolisRepository {
     private SessionFactory sessionFactory;
 
     public Session getSession() {
-        return sessionFactory.getCurrentSession();
-    }
-
-    protected Transaction getTransaction() {
-        Transaction transaction = getSession().getTransaction();
-        if (transaction.getStatus() != TransactionStatus.ACTIVE) {
-            transaction.begin();
+        try {
+            return sessionFactory.getCurrentSession();
+        } catch (HibernateException e) {
+            LOGGER.trace("{}", e);
+            return sessionFactory.openSession();
         }
-
-        return transaction;
     }
 
+    @Transactional
     public void verwijder(Polis polis) {
         List<Polis> polissen = new ArrayList();
         polissen.add(polis);
@@ -44,16 +41,14 @@ public class PolisRepository {
         verwijder(polissen);
     }
 
+    @Transactional
     public void verwijder(List<Polis> polissen) {
-        getTransaction().begin();
-
         for (Polis polis : polissen) {
             getSession().delete(polis);
         }
-
-        getTransaction().commit();
     }
 
+    @Transactional
     public void opslaan(Polis polis) {
         List<Polis> polissen = new ArrayList();
         polissen.add(polis);
@@ -61,9 +56,8 @@ public class PolisRepository {
         opslaan(polissen);
     }
 
+    @Transactional
     public void opslaan(List<Polis> polissen) {
-        getTransaction().begin();
-
         for (Polis t : polissen) {
             LOGGER.info("Opslaan {}", ReflectionToStringBuilder.toString(t, ToStringStyle.SHORT_PREFIX_STYLE));
             if (t.getId() == null) {
@@ -72,49 +66,36 @@ public class PolisRepository {
                 getSession().merge(t);
             }
         }
-
-        getTransaction().commit();
-        getSession().close();
     }
 
+    @Transactional(readOnly = true)
     public Polis lees(Long id) {
-        getTransaction().begin();
-
         Polis t = getSession().get(Polis.class, id);
-
-        getTransaction().commit();
 
         return t;
     }
 
+    @Transactional(readOnly = true)
     public List<Polis> alles() {
-        getTransaction().begin();
-
         Query query = getSession().createQuery("select p from Polis p");
 
         List<Polis> polis = query.list();
 
-        getTransaction().commit();
-
         return polis;
     }
 
+    @Transactional(readOnly = true)
     public List<Polis> zoekOpPolisNummer(String PolisNummer) {
-        getTransaction().begin();
-
         Query query = getSession().getNamedQuery("Polis.zoekOpPolisNummer");
         query.setParameter("polisNummer", PolisNummer);
 
         List<Polis> result = query.list();
 
-        getTransaction().commit();
-
         return result;
     }
 
+    @Transactional(readOnly = true)
     public List<Polis> alles(SoortEntiteit soortEntiteit, Long entiteitId) {
-        getTransaction().begin();
-
         String queryString = null;
         if (soortEntiteit == SoortEntiteit.RELATIE) {
             queryString = "select p from Polis p where relatie = " + entiteitId;
@@ -125,8 +106,6 @@ public class PolisRepository {
         Query query = getSession().createQuery(queryString);
 
         List<Polis> lijst = query.list();
-
-        getTransaction().commit();
 
         return lijst;
     }

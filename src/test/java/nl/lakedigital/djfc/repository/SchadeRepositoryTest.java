@@ -40,11 +40,9 @@ public class SchadeRepositoryTest {
         soortSchade3.setIngebruik(true);
         soortSchade3.setOmschrijving("deb");
 
-        repository.getTransaction().begin();
-        repository.getSession().persist(soortSchade1);
-        repository.getSession().persist(soortSchade2);
-        repository.getSession().persist(soortSchade3);
-        repository.getTransaction().commit();
+        repository.opslaan(soortSchade1);
+        repository.opslaan(soortSchade2);
+        repository.opslaan(soortSchade3);
 
         assertEquals(2, repository.soortenSchade().size());
         assertEquals(2, repository.soortenSchade("b").size());
@@ -58,13 +56,11 @@ public class SchadeRepositoryTest {
 
         AuditReader reader = AuditReaderFactory.get(repository.getSession());
 
-        repository.getTransaction().begin();
+        repository.getSession().getTransaction().begin();
 
         List<Number> revisions = reader.getRevisions(SoortSchade.class, soortSchade1.getId());
 
         assertThat(revisions.size(), is(2));
-
-        repository.getTransaction().commit();
     }
 
     @Test
@@ -79,11 +75,9 @@ public class SchadeRepositoryTest {
         statusSchade3.setStatus("status3");
         statusSchade3.setIngebruik(true);
 
-        repository.getTransaction().begin();
-        repository.getSession().persist(statusSchade1);
-        repository.getSession().persist(statusSchade2);
-        repository.getSession().persist(statusSchade3);
-        repository.getTransaction().commit();
+        repository.opslaan(statusSchade1);
+        repository.opslaan(statusSchade2);
+        repository.opslaan(statusSchade3);
 
         assertEquals(3, repository.getStatussen().size());
         assertEquals(statusSchade1, repository.getStatussen("status1"));
@@ -97,9 +91,7 @@ public class SchadeRepositoryTest {
     public void zoekOpSchadeNummerMaatschappij() {
         StatusSchade statusSchade = maakStatusSchade("status");
 
-        repository.getTransaction().begin();
-        repository.getSession().persist(statusSchade);
-        repository.getTransaction().commit();
+        repository.opslaan(statusSchade);
 
         Schade schade1 = maakSchade("schadeNummerMaatschappij1", statusSchade, 1L);
         Schade schade2 = maakSchade("schadeNummerMaatschappij2", statusSchade, 1L);
