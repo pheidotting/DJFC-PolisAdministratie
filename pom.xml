@@ -387,7 +387,27 @@
                         <version>2.7</version>
                         <executions>
                             <execution>
-                                <id>copy-resources</id>
+                                <id>properties files</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>/Users/patrickheidotting/Documents/DEV/Java/jetty/comm/
+                                    </outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/src/main/resources/dev</directory>
+                                            <includes>
+                                                <include>pa.app.properties</include>
+                                                <include>pa.log4j.xml</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>war-file</id>
                                 <phase>package</phase>
                                 <goals>
                                     <goal>copy-resources</goal>
