@@ -24,7 +24,7 @@ public class DomainPolisNaarMessagingPolisMapper implements Function<nl.lakedigi
         polis.setDekking(polisIn.getDekking());
 
 
-        String patternDatum = "dd-MM-yyyy";
+        String patternDatum = "yyyy-MM-dd";
 
         if (polisIn.getIngangsDatum() != null && !"".equals(polisIn.getIngangsDatum())) {
             polis.setIngangsDatum(polisIn.getIngangsDatum().toString(patternDatum));

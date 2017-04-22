@@ -2,6 +2,7 @@ package nl.lakedigital.djfc.messaging.reciever;
 
 import nl.lakedigital.as.messaging.request.PolisOpslaanRequest;
 import nl.lakedigital.as.messaging.response.PolisOpslaanResponse;
+import nl.lakedigital.djfc.client.identificatie.IdentificatieClient;
 import nl.lakedigital.djfc.domain.Polis;
 import nl.lakedigital.djfc.messaging.mapper.DomainPolisNaarMessagingPolisMapper;
 import nl.lakedigital.djfc.messaging.mapper.MessagingPolisNaarDomainPolisMapper;
@@ -28,6 +29,8 @@ public class PolisOpslaanRequestReciever extends AbstractReciever<PolisOpslaanRe
     private PolisService polisService;
     @Inject
     private List<nl.lakedigital.djfc.domain.Polis> polissen;
+    @Inject
+    private IdentificatieClient identificatieClient;
 
     public PolisOpslaanRequestReciever() {
         super(PolisOpslaanRequest.class, LOGGER);
@@ -35,7 +38,9 @@ public class PolisOpslaanRequestReciever extends AbstractReciever<PolisOpslaanRe
 
     @Override
     public void verwerkMessage(PolisOpslaanRequest polisOpslaanRequest) {
-        List<Polis> polissenOpslaan = polisOpslaanRequest.getPolissen().stream().map(new MessagingPolisNaarDomainPolisMapper(polisService, polissen))//
+        LOGGER.debug("$$$$$$");
+        LOGGER.debug(ReflectionToStringBuilder.toString(polisOpslaanRequest));
+        List<Polis> polissenOpslaan = polisOpslaanRequest.getPolissen().stream().map(new MessagingPolisNaarDomainPolisMapper(polisService, polissen, identificatieClient))//
                 .map(polis -> {
                     LOGGER.debug(ReflectionToStringBuilder.toString(polis));
                     return polis;
@@ -45,6 +50,8 @@ public class PolisOpslaanRequestReciever extends AbstractReciever<PolisOpslaanRe
 
         if (replyTo != null) {
             PolisOpslaanResponse polisOpslaanResponse = new PolisOpslaanResponse();
+            LOGGER.debug("#####");
+            LOGGER.debug(ReflectionToStringBuilder.toString(polisOpslaanRequest));
             polisOpslaanResponse.setAntwoordOp(polisOpslaanRequest);
             polisOpslaanResponse.setPolissen(polissenOpslaan.stream().map(new DomainPolisNaarMessagingPolisMapper()).collect(Collectors.toList()));
 

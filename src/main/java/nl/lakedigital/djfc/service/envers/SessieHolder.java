@@ -7,6 +7,7 @@ public final class SessieHolder {
         return SessieHolder.sessie.get();
     }
 
+
     public static void set(Sessie auditContext) {
         SessieHolder.sessie.set(auditContext);
     }

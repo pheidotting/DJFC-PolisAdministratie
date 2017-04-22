@@ -1,6 +1,8 @@
 package nl.lakedigital.djfc.messaging.mapper;
 
 import nl.lakedigital.as.messaging.domain.Polis;
+import nl.lakedigital.djfc.client.identificatie.IdentificatieClient;
+import nl.lakedigital.djfc.commons.json.Identificatie;
 import nl.lakedigital.djfc.domain.Bedrag;
 import nl.lakedigital.djfc.domain.Betaalfrequentie;
 import nl.lakedigital.djfc.domain.SoortEntiteit;
@@ -8,8 +10,11 @@ import nl.lakedigital.djfc.domain.StatusPolis;
 import nl.lakedigital.djfc.predicates.JPolisOpSchermNaamPredicate;
 import nl.lakedigital.djfc.service.PolisService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.function.Function;
@@ -17,25 +22,41 @@ import java.util.function.Function;
 import static com.google.common.collect.Lists.newArrayList;
 
 public class MessagingPolisNaarDomainPolisMapper implements Function<Polis, nl.lakedigital.djfc.domain.Polis> {
+    private final static Logger LOGGER = LoggerFactory.getLogger(MessagingPolisNaarDomainPolisMapper.class);
+
     private PolisService polisService;
     private List<nl.lakedigital.djfc.domain.Polis> polissen;
+    private IdentificatieClient identificatieClient;
 
-    public MessagingPolisNaarDomainPolisMapper(PolisService polisService, List<nl.lakedigital.djfc.domain.Polis> polissen) {
+    public MessagingPolisNaarDomainPolisMapper(PolisService polisService, List<nl.lakedigital.djfc.domain.Polis> polissen, IdentificatieClient identificatieClient) {
         this.polisService = polisService;
         this.polissen = polissen;
+        this.identificatieClient = identificatieClient;
     }
 
     @Override
     public nl.lakedigital.djfc.domain.Polis apply(Polis polisIn) {
         nl.lakedigital.djfc.domain.Polis polis;
+
+        Identificatie identificatie = identificatieClient.zoekIdentificatieCode(polisIn.getIdentificatie());
+        LOGGER.debug("Opgehaalde Identificatie {}", ReflectionToStringBuilder.toString(identificatie));
+
+        if (identificatie != null) {
+            polisIn.setId(identificatie.getEntiteitId());
+        }
+
+        LOGGER.debug(ReflectionToStringBuilder.toString(polisIn));
+
         if (polisIn.getId() == null || polisIn.getId() == 0L) {
+            LOGGER.debug("Polis zonder id, nieuwe aanmaken dus");
             polis = polissen.stream().filter(new JPolisOpSchermNaamPredicate(polisIn.getSoort())).findFirst().get().nieuweInstantie(SoortEntiteit.valueOf(polisIn.getSoortEntiteit()), polisIn.getEntiteitId());
         } else {
+            LOGGER.debug("Bestaande polis, ophalen dus..");
             polis = polisService.lees(polisIn.getId());
             polis.setSoortEntiteitEnEntiteitId(SoortEntiteit.valueOf(polisIn.getSoortEntiteit()), polisIn.getEntiteitId());
         }
 
-        String patternDatum = "dd-MM-yyyy";
+        String patternDatum = "yyyy-MM-dd";
 
         LocalDate ingangsDatum = null;
         if (polisIn.getIngangsDatum() != null && !"".equals(polisIn.getIngangsDatum())) {
