@@ -1,32 +1,46 @@
 package nl.lakedigital.djfc.messaging.mapper;
 
 import nl.lakedigital.as.messaging.domain.Schade;
+import nl.lakedigital.djfc.client.identificatie.IdentificatieClient;
+import nl.lakedigital.djfc.commons.json.Identificatie;
 import nl.lakedigital.djfc.domain.Bedrag;
 import nl.lakedigital.djfc.service.SchadeService;
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.function.Function;
 
 public class MessagingSchadeNaarDomainSchadeMapper implements Function<Schade, nl.lakedigital.djfc.domain.Schade> {
-    private SchadeService schadeService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessagingSchadeNaarDomainSchadeMapper.class);
 
-    public MessagingSchadeNaarDomainSchadeMapper(SchadeService schadeService) {
+    private SchadeService schadeService;
+    private IdentificatieClient identificatieClient;
+
+    public MessagingSchadeNaarDomainSchadeMapper(SchadeService schadeService, IdentificatieClient identificatieClient) {
         this.schadeService = schadeService;
+        this.identificatieClient = identificatieClient;
     }
 
     @Override
     public nl.lakedigital.djfc.domain.Schade apply(Schade schadeIn) {
         nl.lakedigital.djfc.domain.Schade schade;
-        if (schadeIn.getId() == null || schadeIn.getId() == 0L) {
+
+        if (schadeIn.getIdentificatie() == null || "".equals(schadeIn.getIdentificatie())) {
             schade = new nl.lakedigital.djfc.domain.Schade();
         } else {
-            schade = schadeService.lees(schadeIn.getId());
+            Identificatie identificatie = identificatieClient.zoekIdentificatieCode(schadeIn.getIdentificatie());
+
+            LOGGER.debug(ReflectionToStringBuilder.toString(identificatie));
+
+            schade = schadeService.lees(identificatie.getEntiteitId());
         }
 
-        String patternDatum = "dd-MM-yyyy";
-        String patternDatumTijd = "dd-MM-yyyy HH:mm";
+        String patternDatum = "yyyy-MM-dd";
+        String patternDatumTijd = "yyyy-MM-dd'T'HH:mm";
 
         LocalDate datumAfgehandeld = null;
         if (schadeIn.getDatumAfgehandeld() != null && !"".equals(schadeIn.getDatumAfgehandeld())) {

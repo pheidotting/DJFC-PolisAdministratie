@@ -179,6 +179,8 @@ public class SchadeRepository {
     public Schade lees(Long id) {
         Schade t = getSession().get(Schade.class, id);
 
+        LOGGER.debug("Opzoeken Schade met id {}, gevonden {}", id, t);
+
         return t;
     }
 }

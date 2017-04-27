@@ -28,6 +28,8 @@ public class PolisService {
     private PolisRepository polisRepository;
     @Inject
     private List<Polis> polissen;
+    @Inject
+    private SchadeService schadeService;
 
     public List<String> allePolisSoorten(final SoortVerzekering soortVerzekering) {
         Iterable<Polis> poli = filter(polissen, new PolissenOpSoortPredicate(soortVerzekering));
@@ -38,7 +40,13 @@ public class PolisService {
     }
 
     public List<Polis> alles(SoortEntiteit soortEntiteit, Long entiteitId) {
-        return polisRepository.alles(soortEntiteit, entiteitId);
+        List<Polis> polissen = polisRepository.alles(soortEntiteit, entiteitId);
+
+        for (Polis polis : polissen) {
+            polis.setSchades(schadeService.allesBijPolis(polis));
+        }
+
+        return polissen;
     }
 
     public void beeindigen(Long id) {

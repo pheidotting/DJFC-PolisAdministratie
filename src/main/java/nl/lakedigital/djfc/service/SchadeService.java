@@ -1,5 +1,7 @@
 package nl.lakedigital.djfc.service;
 
+import nl.lakedigital.djfc.client.identificatie.IdentificatieClient;
+import nl.lakedigital.djfc.commons.json.Identificatie;
 import nl.lakedigital.djfc.domain.*;
 import nl.lakedigital.djfc.repository.SchadeRepository;
 import org.apache.commons.lang3.StringUtils;
@@ -20,6 +22,8 @@ public class SchadeService {
     private SchadeRepository schadeRepository;
     @Inject
     private PolisService polisService;
+    @Inject
+    private IdentificatieClient identificatieClient;
 
     public List<SoortSchade> soortenSchade() {
         return schadeRepository.soortenSchade();
@@ -79,7 +83,9 @@ public class SchadeService {
         }
 
         if (polisId != null && !"Kies een polis uit de lijst..".equals(polisId)) {
-            schade.setPolis(Long.valueOf(polisId));
+            Identificatie identificatie = identificatieClient.zoekIdentificatieCode(polisId);
+
+            schade.setPolis(Long.valueOf(identificatie.getEntiteitId()));
         }
 
         LOGGER.debug("Schade opslaan");
@@ -97,8 +103,12 @@ public class SchadeService {
         return result;
     }
 
+    public List<Schade> allesBijPolis(Polis polis) {
+        return schadeRepository.alleSchades(polis.getId());
+    }
+
     public Schade lees(Long id) {
-        LOGGER.debug("{}", id);
+        LOGGER.debug("Schade zoeken met id {}", id);
         Schade schade = schadeRepository.lees(id);
         LOGGER.debug(ReflectionToStringBuilder.toString(schade));
         return schade;

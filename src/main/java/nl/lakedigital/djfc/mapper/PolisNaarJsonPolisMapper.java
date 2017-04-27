@@ -5,8 +5,12 @@ import nl.lakedigital.djfc.domain.Bedrag;
 import nl.lakedigital.djfc.domain.Polis;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
+
 @Component
 public class PolisNaarJsonPolisMapper extends AbstractMapper<Polis, JsonPolis> implements JsonMapper{
+    @Inject
+    private SchadeNaarJsonSchadeMapper schadeMapper;
 
     @Override
     public JsonPolis map(Polis polis, Object parent, Object bestaandOjbect) {
@@ -54,7 +58,7 @@ public class PolisNaarJsonPolisMapper extends AbstractMapper<Polis, JsonPolis> i
                     jsonPolis.setEntiteitId(polis.getRelatie());
                     jsonPolis.setSoortEntiteit("RELATIE");
                 }
-        //        jsonPolis.setSchades(schadeMapper.mapAllNaarJson(polis.getSchades()));
+        jsonPolis.setSchades(schadeMapper.mapAll(polis.getSchades()));
         //        if (polis.getRelatie() != null) {
         //            jsonPolis.setRelatie(polis.getRelatie().toString());
         //        }

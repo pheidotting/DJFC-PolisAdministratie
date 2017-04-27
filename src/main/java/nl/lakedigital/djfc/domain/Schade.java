@@ -158,7 +158,7 @@ public class Schade implements Serializable {
     }
 
     public void setDatumAfgehandeld(LocalDate datumAfgehandeld) {
-        this.datumAfgehandeld = datumAfgehandeld.toDate();
+        this.datumAfgehandeld = datumAfgehandeld == null ? null : datumAfgehandeld.toDate();
     }
 
     public Bedrag getEigenRisico() {

@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -81,6 +83,8 @@ public abstract class Polis implements Serializable, Cloneable {
 
     @Transient
     private String identificatie;
+    @Transient
+    private List<Schade> schades;
 
     public String getIdentificatie() {
         return identificatie;
@@ -88,6 +92,14 @@ public abstract class Polis implements Serializable, Cloneable {
 
     public void setIdentificatie(String identificatie) {
         this.identificatie = identificatie;
+    }
+
+    public List<Schade> getSchades() {if(schades==null){schades = new ArrayList<>();}
+        return schades;
+    }
+
+    public void setSchades(List<Schade> schades) {
+        this.schades = schades;
     }
 
     public abstract SoortVerzekering getSoortVerzekering();

@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 public class SchadeNaarJsonSchadeMapper extends AbstractMapper<Schade, JsonSchade> implements JsonMapper {
     private final static Logger LOGGER = LoggerFactory.getLogger(SchadeNaarJsonSchadeMapper.class);
 
-    String patternDatumTijd = "dd-MM-yyyy HH:mm";
-    String patternDatum = "dd-MM-yyyy";
+    String patternDatumTijd = "yyyy-MM-dd'T'HH:mm";
+    String patternDatum = "yyyy-MM-dd";
 
     @Override
     public JsonSchade map(Schade schade, Object parent, Object bestaandObject) {
@@ -23,7 +23,7 @@ public class SchadeNaarJsonSchadeMapper extends AbstractMapper<Schade, JsonSchad
         if (schade.getDatumAfgehandeld() != null) {
             jsonSchade.setDatumAfgehandeld(schade.getDatumAfgehandeld().toString(patternDatum));
         }
-        if (schade.getDatumAfgehandeld() != null) {
+        if (schade.getDatumTijdMelding() != null) {
             jsonSchade.setDatumTijdMelding(schade.getDatumTijdMelding().toString(patternDatumTijd));
         }
         if (schade.getDatumTijdSchade() != null) {

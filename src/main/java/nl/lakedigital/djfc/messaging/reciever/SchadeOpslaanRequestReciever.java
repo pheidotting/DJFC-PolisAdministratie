@@ -2,6 +2,7 @@ package nl.lakedigital.djfc.messaging.reciever;
 
 import nl.lakedigital.as.messaging.request.SchadeOpslaanRequest;
 import nl.lakedigital.as.messaging.response.SchadeOpslaanResponse;
+import nl.lakedigital.djfc.client.identificatie.IdentificatieClient;
 import nl.lakedigital.djfc.domain.Schade;
 import nl.lakedigital.djfc.messaging.mapper.DomainSchadeNaarMessagingSchadeMapper;
 import nl.lakedigital.djfc.messaging.mapper.MessagingSchadeNaarDomainSchadeMapper;
@@ -25,6 +26,8 @@ public class SchadeOpslaanRequestReciever extends AbstractReciever<SchadeOpslaan
 
     @Inject
     private SchadeService schadeService;
+    @Inject
+    private IdentificatieClient identificatieClient;
 
     public SchadeOpslaanRequestReciever() {
         super(SchadeOpslaanRequest.class, LOGGER);
@@ -32,7 +35,7 @@ public class SchadeOpslaanRequestReciever extends AbstractReciever<SchadeOpslaan
 
     @Override
     public void verwerkMessage(SchadeOpslaanRequest schadeOpslaanRequest) {
-        List<Schade> schadesOpslaan = schadeOpslaanRequest.getSchades().stream().map(new MessagingSchadeNaarDomainSchadeMapper(schadeService))//
+        List<Schade> schadesOpslaan = schadeOpslaanRequest.getSchades().stream().map(new MessagingSchadeNaarDomainSchadeMapper(schadeService, identificatieClient))//
                 .collect(Collectors.toList());
 
 

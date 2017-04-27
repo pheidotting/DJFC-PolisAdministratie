@@ -89,8 +89,9 @@ public class SchadeController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/lees/{id}")
     @ResponseBody
-    public OpvragenSchadesResponse lees(@PathVariable("id") String id) {
-        Schade schade = schadeService.lees(Long.valueOf(id));
+    public OpvragenSchadesResponse lees(@PathVariable("id") Long id) {
+        LOGGER.debug("Opzoeken schade met id {}", id);
+        Schade schade = schadeService.lees(id);
 
         if (schade == null) {
             schade = new Schade();

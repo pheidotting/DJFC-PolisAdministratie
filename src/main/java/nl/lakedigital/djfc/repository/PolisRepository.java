@@ -72,6 +72,8 @@ public class PolisRepository {
     public Polis lees(Long id) {
         Polis t = getSession().get(Polis.class, id);
 
+        LOGGER.debug("Opzoeken Polis met id {}, gevonden {}", id, t);
+
         return t;
     }
 
