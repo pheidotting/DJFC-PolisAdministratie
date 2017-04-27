@@ -1,5 +1,7 @@
 package nl.lakedigital.djfc.service;
 
+import nl.lakedigital.djfc.client.identificatie.IdentificatieClient;
+import nl.lakedigital.djfc.commons.json.Identificatie;
 import nl.lakedigital.djfc.domain.*;
 import nl.lakedigital.djfc.domain.particulier.AutoVerzekering;
 import nl.lakedigital.djfc.repository.SchadeRepository;
@@ -28,6 +30,8 @@ public class SchadeServiceTest extends EasyMockSupport {
     private SchadeRepository schadeRepository;
     @Mock
     private PolisService polisService;
+    @Mock
+    private IdentificatieClient identificatieClient;
 
     @Test
     public void alles() {
@@ -137,6 +141,10 @@ public class SchadeServiceTest extends EasyMockSupport {
         schadeRepository.opslaan(schade);
         expectLastCall();
 
+        Identificatie identificatie = new Identificatie();
+        identificatie.setEntiteitId(46L);
+        expect(identificatieClient.zoekIdentificatieCode(polisId)).andReturn(identificatie);
+
         replayAll();
 
         service.opslaan(schade, soortSchadeString, polisId, statusSchadeString);
@@ -166,8 +174,9 @@ public class SchadeServiceTest extends EasyMockSupport {
         schade.setPolis(Long.valueOf(polisId));
         expectLastCall();
 
-        //        expect(schade.getId()).andReturn(58L);
-        //        expect(schadeRepository.lees(58L)).andReturn(schade);
+        Identificatie identificatie = new Identificatie();
+        identificatie.setEntiteitId(46L);
+        expect(identificatieClient.zoekIdentificatieCode(polisId)).andReturn(identificatie);
 
         schadeRepository.opslaan(schade);
         expectLastCall();

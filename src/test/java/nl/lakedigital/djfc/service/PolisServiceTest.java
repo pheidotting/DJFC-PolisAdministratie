@@ -152,7 +152,7 @@ public class PolisServiceTest extends EasyMockSupport {
 
         List<Polis> polissen = new ArrayList<>();
 
-        expect(polisService.alles(soortEntiteit, entiteitId)).andReturn(polissen);
+        expect(polisRepository.alles(soortEntiteit, entiteitId)).andReturn(polissen);
 
         replayAll();
 
