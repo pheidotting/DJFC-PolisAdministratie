@@ -81,9 +81,7 @@ public class PolisRepository {
     public List<Polis> alles() {
         Query query = getSession().createQuery("select p from Polis p");
 
-        List<Polis> polis = query.list();
-
-        return polis;
+        return query.list();
     }
 
     @Transactional(readOnly = true)
@@ -91,9 +89,7 @@ public class PolisRepository {
         Query query = getSession().getNamedQuery("Polis.zoekOpPolisNummer");
         query.setParameter("polisNummer", PolisNummer);
 
-        List<Polis> result = query.list();
-
-        return result;
+        return query.list();
     }
 
     @Transactional(readOnly = true)
@@ -107,8 +103,6 @@ public class PolisRepository {
 
         Query query = getSession().createQuery(queryString);
 
-        List<Polis> lijst = query.list();
-
-        return lijst;
+        return query.list();
     }
 }
