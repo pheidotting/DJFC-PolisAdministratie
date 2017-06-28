@@ -41,9 +41,7 @@ public class SchadeRepository {
     public List<SoortSchade> soortenSchade() {
         Query query = getSession().getNamedQuery("SoortSchade.alles");
 
-        List<SoortSchade> result = query.list();
-
-        return result;
+        return query.list();
     }
 
     @Transactional(readOnly = true)
@@ -51,18 +49,14 @@ public class SchadeRepository {
         Query query = getSession().getNamedQuery("SoortSchade.zoekOpOmschrijving");
         query.setParameter("omschrijving", "%" + omschrijving + "%");
 
-        List<SoortSchade> result = query.list();
-
-        return result;
+        return query.list();
     }
 
     @Transactional(readOnly = true)
     public List<Schade> alles() {
         Query query = getSession().createQuery("select p from Schade p");
 
-        List<Schade> polis = query.list();
-
-        return polis;
+        return query.list();
     }
 
     @Transactional
@@ -95,9 +89,7 @@ public class SchadeRepository {
         Query query = getSession().getNamedQuery("Schade.allesBijPolis");
         query.setParameter("polis", polis);
 
-        List<Schade> result = query.list();
-
-        return result;
+        return query.list();
     }
 
     @Transactional(readOnly = true)
@@ -105,18 +97,14 @@ public class SchadeRepository {
         Query query = getSession().getNamedQuery("StatusSchade.zoekOpSoort");
         query.setParameter("status", status);
 
-        StatusSchade result = (StatusSchade) query.uniqueResult();
-
-        return result;
+        return (StatusSchade) query.uniqueResult();
     }
 
     @Transactional(readOnly = true)
     public List<StatusSchade> getStatussen() {
         Query query = getSession().createQuery("select s from StatusSchade s where s.ingebruik = '1'");
 
-        List<StatusSchade> result = query.list();
-
-        return result;
+        return query.list();
     }
 
     @Transactional(readOnly = true)
@@ -124,9 +112,7 @@ public class SchadeRepository {
         Query query = getSession().getNamedQuery("Schade.zoekOpschadeNummerMaatschappij");
         query.setParameter("schadeNummerMaatschappij", schadeNummerMaatschappij);
 
-        List<Schade> result = query.list();
-
-        return result;
+        return query.list();
     }
 
     @Transactional
