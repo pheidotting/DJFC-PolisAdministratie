@@ -22,7 +22,7 @@ import java.util.function.Function;
 import static com.google.common.collect.Lists.newArrayList;
 
 public class MessagingPolisNaarDomainPolisMapper implements Function<Polis, nl.lakedigital.djfc.domain.Polis> {
-    private final static Logger LOGGER = LoggerFactory.getLogger(MessagingPolisNaarDomainPolisMapper.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MessagingPolisNaarDomainPolisMapper.class);
 
     private PolisService polisService;
     private List<nl.lakedigital.djfc.domain.Polis> polissen;
