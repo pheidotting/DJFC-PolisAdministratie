@@ -40,13 +40,13 @@ public class PolisService {
     }
 
     public List<Polis> alles(SoortEntiteit soortEntiteit, Long entiteitId) {
-        List<Polis> polissen = polisRepository.alles(soortEntiteit, entiteitId);
+        List<Polis> poli = polisRepository.alles(soortEntiteit, entiteitId);
 
-        for (Polis polis : polissen) {
+        for (Polis polis : poli) {
             polis.setSchades(schadeService.allesBijPolis(polis));
         }
 
-        return polissen;
+        return poli;
     }
 
     public void beeindigen(Long id) {
