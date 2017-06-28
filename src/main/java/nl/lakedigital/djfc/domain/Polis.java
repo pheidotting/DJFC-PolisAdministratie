@@ -94,7 +94,10 @@ public abstract class Polis implements Serializable, Cloneable {
         this.identificatie = identificatie;
     }
 
-    public List<Schade> getSchades() {if(schades==null){schades = new ArrayList<>();}
+    public List<Schade> getSchades() {
+        if (schades == null) {
+            schades = new ArrayList<>();
+        }
         return schades;
     }
 
@@ -294,22 +297,7 @@ public abstract class Polis implements Serializable, Cloneable {
             return false;
         }
         Polis polis = (Polis) o;
-        return Objects.equals(getId(), polis.getId()) &&
-                getStatus() == polis.getStatus() &&
-                Objects.equals(getPolisNummer(), polis.getPolisNummer()) &&
-                Objects.equals(getKenmerk(), polis.getKenmerk()) &&
-                Objects.equals(getIngangsDatum(), polis.getIngangsDatum()) &&
-                Objects.equals(getEindDatum(), polis.getEindDatum()) &&
-                Objects.equals(getPremie(), polis.getPremie()) &&
-                Objects.equals(getWijzigingsDatum(), polis.getWijzigingsDatum()) &&
-                Objects.equals(getProlongatieDatum(), polis.getProlongatieDatum()) &&
-                getBetaalfrequentie() == polis.getBetaalfrequentie() &&
-                Objects.equals(getDekking(), polis.getDekking()) &&
-                Objects.equals(getVerzekerdeZaak(), polis.getVerzekerdeZaak()) &&
-                Objects.equals(getRelatie(), polis.getRelatie()) &&
-                Objects.equals(getBedrijf(), polis.getBedrijf()) &&
-                Objects.equals(getMaatschappij(), polis.getMaatschappij()) &&
-                Objects.equals(getOmschrijvingVerzekering(), polis.getOmschrijvingVerzekering());
+        return Objects.equals(getId(), polis.getId()) && getStatus() == polis.getStatus() && Objects.equals(getPolisNummer(), polis.getPolisNummer()) && Objects.equals(getKenmerk(), polis.getKenmerk()) && Objects.equals(getIngangsDatum(), polis.getIngangsDatum()) && Objects.equals(getEindDatum(), polis.getEindDatum()) && Objects.equals(getPremie(), polis.getPremie()) && Objects.equals(getWijzigingsDatum(), polis.getWijzigingsDatum()) && Objects.equals(getProlongatieDatum(), polis.getProlongatieDatum()) && getBetaalfrequentie() == polis.getBetaalfrequentie() && Objects.equals(getDekking(), polis.getDekking()) && Objects.equals(getVerzekerdeZaak(), polis.getVerzekerdeZaak()) && Objects.equals(getRelatie(), polis.getRelatie()) && Objects.equals(getBedrijf(), polis.getBedrijf()) && Objects.equals(getMaatschappij(), polis.getMaatschappij()) && Objects.equals(getOmschrijvingVerzekering(), polis.getOmschrijvingVerzekering());
     }
 
     @Override
