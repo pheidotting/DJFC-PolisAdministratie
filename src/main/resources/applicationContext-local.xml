@@ -61,5 +61,9 @@
         <property name="start" value="true"/>
     </bean>
 
-    <import resource="classpath:../pa/applicationContext-jms.xml"/>
+    <bean id="identificatieClient" class="nl.lakedigital.djfc.client.identificatie.IdentificatieClient">
+        <property name="basisUrl" value=""/>
+    </bean>
+
+    <import resource="classpath:applicationContext-jms.xml"/>
 </beans>
