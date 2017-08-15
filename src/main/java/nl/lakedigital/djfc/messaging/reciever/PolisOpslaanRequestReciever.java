@@ -40,6 +40,9 @@ public class PolisOpslaanRequestReciever extends AbstractReciever<PolisOpslaanRe
     public void verwerkMessage(PolisOpslaanRequest polisOpslaanRequest) {
         LOGGER.debug("$$$$$$");
         LOGGER.debug(ReflectionToStringBuilder.toString(polisOpslaanRequest));
+        for (nl.lakedigital.as.messaging.domain.Polis p : polisOpslaanRequest.getPolissen()) {
+            LOGGER.debug(ReflectionToStringBuilder.toString(p));
+        }
         List<Polis> polissenOpslaan = polisOpslaanRequest.getPolissen().stream().map(new MessagingPolisNaarDomainPolisMapper(polisService, polissen, identificatieClient))//
                 .map(polis -> {
                     LOGGER.debug(ReflectionToStringBuilder.toString(polis));

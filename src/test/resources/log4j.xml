@@ -22,6 +22,10 @@
         <priority value="error"/>
     </category>
 
+    <category name="ActiveMQ">
+        <priority value="error"/>
+    </category>
+
     <root>
         <priority value="trace"/>
         <appender-ref ref="console" />

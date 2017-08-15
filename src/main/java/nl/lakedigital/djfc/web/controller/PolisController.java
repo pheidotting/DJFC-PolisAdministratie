@@ -8,6 +8,7 @@ import nl.lakedigital.djfc.domain.Polis;
 import nl.lakedigital.djfc.domain.SoortEntiteit;
 import nl.lakedigital.djfc.domain.SoortVerzekering;
 import nl.lakedigital.djfc.mapper.Mapper;
+import nl.lakedigital.djfc.reflection.ReflectionToStringBuilder;
 import nl.lakedigital.djfc.service.PolisService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,6 +66,7 @@ public class PolisController {
             opvragenPolissenResponse.getPolissen().add(new JsonPolis());
         }
 
+        LOGGER.debug(ReflectionToStringBuilder.toString(opvragenPolissenResponse));
         return opvragenPolissenResponse;
     }
 

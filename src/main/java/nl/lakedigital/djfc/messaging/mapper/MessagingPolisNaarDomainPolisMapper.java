@@ -38,13 +38,14 @@ public class MessagingPolisNaarDomainPolisMapper implements Function<Polis, nl.l
     public nl.lakedigital.djfc.domain.Polis apply(Polis polisIn) {
         nl.lakedigital.djfc.domain.Polis polis;
 
-        Identificatie identificatie = identificatieClient.zoekIdentificatieCode(polisIn.getIdentificatie());
-        LOGGER.debug("Opgehaalde Identificatie {}", ReflectionToStringBuilder.toString(identificatie));
+        if (StringUtils.isNotEmpty(polisIn.getIdentificatie())) {
+            Identificatie identificatie = identificatieClient.zoekIdentificatieCode(polisIn.getIdentificatie());
+            LOGGER.debug("Opgehaalde Identificatie {}", ReflectionToStringBuilder.toString(identificatie));
 
-        if (identificatie != null) {
-            polisIn.setId(identificatie.getEntiteitId());
+            if (identificatie != null) {
+                polisIn.setId(identificatie.getEntiteitId());
+            }
         }
-
         LOGGER.debug(ReflectionToStringBuilder.toString(polisIn));
 
         if (polisIn.getId() == null || polisIn.getId() == 0L) {

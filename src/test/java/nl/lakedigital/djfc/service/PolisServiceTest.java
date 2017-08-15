@@ -1,16 +1,15 @@
 package nl.lakedigital.djfc.service;
 
+import nl.lakedigital.as.messaging.domain.SoortEntiteitEnEntiteitId;
 import nl.lakedigital.djfc.domain.Polis;
 import nl.lakedigital.djfc.domain.SoortEntiteit;
 import nl.lakedigital.djfc.domain.SoortVerzekering;
 import nl.lakedigital.djfc.domain.particulier.*;
 import nl.lakedigital.djfc.domain.zakelijk.AanhangerVerzekering;
 import nl.lakedigital.djfc.domain.zakelijk.GeldVerzekering;
+import nl.lakedigital.djfc.messaging.sender.EntiteitenOpgeslagenRequestSender;
 import nl.lakedigital.djfc.repository.PolisRepository;
-import org.easymock.EasyMockRunner;
-import org.easymock.EasyMockSupport;
-import org.easymock.Mock;
-import org.easymock.TestSubject;
+import org.easymock.*;
 import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Test;
@@ -22,8 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.expectLastCall;
+import static org.easymock.EasyMock.*;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
@@ -37,6 +35,8 @@ public class PolisServiceTest extends EasyMockSupport {
 
     @Mock
     private PolisRepository polisRepository;
+    @Mock
+    private EntiteitenOpgeslagenRequestSender entiteitenOpgeslagenRequestSender;
 
     @After
     public void after() {
@@ -75,9 +75,17 @@ public class PolisServiceTest extends EasyMockSupport {
 
         expect(polisRepository.lees(id)).andReturn(polis);
 
+        Capture<List> soortEntiteitEnEntiteitIdsCapture = newCapture();
+        entiteitenOpgeslagenRequestSender.send(capture(soortEntiteitEnEntiteitIdsCapture));
+
         replayAll();
 
         polisService.opslaan(polis);
+
+        List<SoortEntiteitEnEntiteitId> soortEntiteitEnEntiteitIds = soortEntiteitEnEntiteitIdsCapture.getValue();
+        assertThat(soortEntiteitEnEntiteitIds.size(), is(1));
+        assertThat(soortEntiteitEnEntiteitIds.get(0).getEntiteitId(), is(58L));
+        assertThat(soortEntiteitEnEntiteitIds.get(0).getSoortEntiteit().name(), is(SoortEntiteit.POLIS.name()));
     }
 
     @Test
