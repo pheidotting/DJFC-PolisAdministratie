@@ -38,6 +38,11 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.coaxys</groupId>
+            <artifactId>log4slack-java</artifactId>
+            <version>1.2</version>
+        </dependency>
+        <dependency>
             <groupId>nl.lakedigital.as</groupId>
             <artifactId>messaging</artifactId>
             <version>5.29</version>
