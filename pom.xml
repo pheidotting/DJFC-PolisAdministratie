@@ -418,8 +418,8 @@
                                         <resource>
                                             <directory>${basedir}/src/main/resources/dev</directory>
                                             <includes>
-                                                <include>pa.app.properties</include>
-                                                <include>pa.log4j.xml</include>
+                                                <include>dev/pa.app.properties</include>
+                                                <include>dev/pa.log4j.xml</include>
                                             </includes>
                                         </resource>
                                     </resources>
