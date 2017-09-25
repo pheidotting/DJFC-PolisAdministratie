@@ -1,6 +1,5 @@
 package nl.lakedigital.djfc.web.controller;
 
-import nl.lakedigital.djfc.reflection.ReflectionToStringBuilder;
 import nl.lakedigital.djfc.repository.PolisRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +23,7 @@ public class ZabbixController {
     @ResponseBody
     public String checkDatabase() {
         try {
-            LOGGER.debug(ReflectionToStringBuilder.toString(polisRepository.getSession().createSQLQuery("/* ping */ SELECT 1").uniqueResult()));
+            polisRepository.getSession().createSQLQuery("/* ping */ SELECT 1").uniqueResult();
             return "1";
         } catch (Exception e) {
             LOGGER.error("Database niet beschikbaar", e);
