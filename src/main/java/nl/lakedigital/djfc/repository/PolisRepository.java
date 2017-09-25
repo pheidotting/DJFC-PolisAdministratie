@@ -28,7 +28,6 @@ public class PolisRepository {
         try {
             return sessionFactory.getCurrentSession();
         } catch (HibernateException e) {
-            LOGGER.trace("{}", e);
             return sessionFactory.openSession();
         }
     }
