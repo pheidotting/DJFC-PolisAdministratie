@@ -75,7 +75,7 @@
         <dependency>
             <groupId>nl.lakedigital.djfc</groupId>
             <artifactId>djfc-clients</artifactId>
-            <version>5.48</version>
+            <version>5.49</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -418,8 +418,8 @@
                                         <resource>
                                             <directory>${basedir}/src/main/resources/dev</directory>
                                             <includes>
-                                                <include>dev/pa.app.properties</include>
-                                                <include>dev/pa.log4j.xml</include>
+                                                <include>pa.app.properties</include>
+                                                <include>pa.log4j.xml</include>
                                             </includes>
                                         </resource>
                                     </resources>

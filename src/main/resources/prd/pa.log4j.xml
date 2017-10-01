@@ -38,6 +38,7 @@
     </appender>
 
     <appender name="loggly" class="nl.lakedigital.djfc.appender.LogglyAppender">
+        <param name="interval" value="300"/>
         <param name="tag" value="prd,pa"/>
         <param name="token" value="ffe37ab7-e154-4316-a54e-888323b15e7e"/>
         <layout class="org.apache.log4j.PatternLayout">
