@@ -72,5 +72,5 @@
         <property name="basisUrl" value="${id.url}"/>
     </bean>
 
-    <!--<import resource="applicationContext-jms.xml"/>-->
+    <import resource="applicationContext-jms.xml"/>
 </beans>
