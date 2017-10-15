@@ -38,8 +38,7 @@ public class PolisOpslaanRequestReciever extends AbstractReciever<PolisOpslaanRe
 
     @Override
     public void verwerkMessage(PolisOpslaanRequest polisOpslaanRequest) {
-        LOGGER.debug("$$$$$$");
-        LOGGER.debug(ReflectionToStringBuilder.toString(polisOpslaanRequest));
+        LOGGER.debug("Inkomend request {}", ReflectionToStringBuilder.toString(polisOpslaanRequest));
         for (nl.lakedigital.as.messaging.domain.Polis p : polisOpslaanRequest.getPolissen()) {
             LOGGER.debug(ReflectionToStringBuilder.toString(p));
         }
@@ -52,9 +51,8 @@ public class PolisOpslaanRequestReciever extends AbstractReciever<PolisOpslaanRe
         polisService.opslaan(polissenOpslaan);
 
         if (replyTo != null) {
+            LOGGER.debug("Response versturen");
             PolisOpslaanResponse polisOpslaanResponse = new PolisOpslaanResponse();
-            LOGGER.debug("#####");
-            LOGGER.debug(ReflectionToStringBuilder.toString(polisOpslaanRequest));
             polisOpslaanResponse.setAntwoordOp(polisOpslaanRequest);
             polisOpslaanResponse.setPolissen(polissenOpslaan.stream().map(new DomainPolisNaarMessagingPolisMapper()).collect(Collectors.toList()));
 
