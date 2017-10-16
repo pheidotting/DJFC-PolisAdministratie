@@ -47,7 +47,6 @@ public class PolisRepository {
         }
     }
 
-    @Transactional
     public void opslaan(Polis polis) {
         List<Polis> polissen = new ArrayList();
         polissen.add(polis);
@@ -55,8 +54,12 @@ public class PolisRepository {
         opslaan(polissen);
     }
 
-    @Transactional
+    //    @Transactional
     public void opslaan(List<Polis> polissen) {
+        //        if(        getSession().getTransaction().isTransactionInProgress){
+        getSession().getTransaction().begin();
+        //            getSession().beginTransaction();
+        //        }
         for (Polis t : polissen) {
             LOGGER.info("Opslaan {}", ReflectionToStringBuilder.toString(t, ToStringStyle.SHORT_PREFIX_STYLE));
             if (t.getId() == null) {
@@ -65,6 +68,7 @@ public class PolisRepository {
                 getSession().merge(t);
             }
         }
+        //        getSession().getTransaction().commit();
     }
 
     @Transactional(readOnly = true)
