@@ -51,9 +51,9 @@
     <logger name="org.hibernate">
         <level value="error"/>
     </logger>
-    <logger name="ch.vorburger">
-        <level value="off"/>
-    </logger>
+    <!--<logger name="org.hibernate.SQL">-->
+    <!--<level value="TRACE"/>-->
+    <!--</logger>-->
     <!--<logger name="nl.lakedigital.djfc">-->
     <!--<level value="trace" />-->
     <!--</logger>-->
