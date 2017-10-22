@@ -27,6 +27,7 @@ public class MessagingSchadeNaarDomainSchadeMapper implements Function<Schade, n
 
     @Override
     public nl.lakedigital.djfc.domain.Schade apply(Schade schadeIn) {
+        LOGGER.debug("Schade in : {}", ReflectionToStringBuilder.toString(schadeIn));
         nl.lakedigital.djfc.domain.Schade schade;
 
         if (schadeIn.getIdentificatie() == null || "".equals(schadeIn.getIdentificatie())) {

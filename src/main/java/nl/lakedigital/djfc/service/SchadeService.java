@@ -71,6 +71,8 @@ public class SchadeService {
             LOGGER.debug("Status schade opzoeken " + statusSchade);
             StatusSchade status = schadeRepository.getStatussen(statusSchade);
 
+            LOGGER.debug("Status schade gevonden: {}", ReflectionToStringBuilder.toString(status));
+
             schade.setStatusSchade(status);
         }
 

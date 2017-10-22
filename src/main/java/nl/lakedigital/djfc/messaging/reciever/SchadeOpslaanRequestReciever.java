@@ -38,7 +38,6 @@ public class SchadeOpslaanRequestReciever extends AbstractReciever<SchadeOpslaan
         List<Schade> schadesOpslaan = schadeOpslaanRequest.getSchades().stream().map(new MessagingSchadeNaarDomainSchadeMapper(schadeService, identificatieClient))//
                 .collect(Collectors.toList());
 
-
         if (replyTo != null) {
             SchadeOpslaanResponse schadeOpslaanResponse = new SchadeOpslaanResponse();
             schadeOpslaanResponse.setAntwoordOp(schadeOpslaanRequest);
