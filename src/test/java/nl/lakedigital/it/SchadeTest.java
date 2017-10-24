@@ -35,7 +35,7 @@ public class SchadeTest {
     private String patternDatumTijd = "yyyy-MM-dd HH:mm";
     private String patternDatum = "yyyy-MM-dd";
 
-    private SchadeClient schadeClient = new SchadeClient();
+    private SchadeClient schadeClient = new SchadeClient("");
 
     @Inject
     private SchadeRepository schadeRepository;
