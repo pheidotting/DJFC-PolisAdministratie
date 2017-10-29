@@ -54,8 +54,8 @@ public class PolisRepository {
         opslaan(polissen);
     }
 
+    @Transactional
     public void opslaan(List<Polis> polissen) {
-        getSession().getTransaction().begin();
         for (Polis t : polissen) {
             LOGGER.info("Opslaan {}", ReflectionToStringBuilder.toString(t, ToStringStyle.SHORT_PREFIX_STYLE));
             if (t.getId() == null) {

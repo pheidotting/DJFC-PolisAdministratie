@@ -98,7 +98,9 @@ public class SchadeRepositoryTest {
 
         repository.opslaan(newArrayList(schade1, schade2));
 
+        assertThat(repository.zoekOpSchadeNummerMaatschappij("schadeNummerMaatschappij1").size(), is(1));
         assertEquals(schade1.getId(), repository.zoekOpSchadeNummerMaatschappij("schadeNummerMaatschappij1").get(0).getId());
+        assertThat(repository.zoekOpSchadeNummerMaatschappij("schadeNummerMaatschappij2").size(), is(1));
         assertEquals(schade2.getId(), repository.zoekOpSchadeNummerMaatschappij("schadeNummerMaatschappij2").get(0).getId());
 
         repository.verwijder(newArrayList(schade1, schade2));
