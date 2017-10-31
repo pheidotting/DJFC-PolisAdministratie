@@ -92,6 +92,8 @@ public class SchadeService {
 
         LOGGER.debug("Schade opslaan");
         schadeRepository.opslaan(schade);
+
+        LOGGER.debug("Opgeslagen schade {}", schade.getId());
     }
 
     public List<Schade> alles(SoortEntiteit soortEntiteit, Long entiteitId) {
