@@ -141,6 +141,8 @@ public class SchadeServiceTest extends EasyMockSupport {
         schadeRepository.opslaan(schade);
         expectLastCall();
 
+        expect(schade.getId()).andReturn(2L);
+
         Identificatie identificatie = new Identificatie();
         identificatie.setEntiteitId(46L);
         expect(identificatieClient.zoekIdentificatieCode(polisId)).andReturn(identificatie);
@@ -180,6 +182,8 @@ public class SchadeServiceTest extends EasyMockSupport {
 
         schadeRepository.opslaan(schade);
         expectLastCall();
+
+        expect(schade.getId()).andReturn(2L);
 
         replayAll();
 
